@@ -2,27 +2,25 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* Dark theme only (PRD §5). Tokens: docs/DESIGN-ANALYSIS.md §4.
+   `dark:` utilities in generated shadcn components always apply. */
+@custom-variant dark (&);
 
 @theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border-strong: var(--border-strong);
+  --color-signal: var(--signal);
+  --color-signal-text: var(--signal-text);
+  --color-highlight: var(--highlight);
+  --color-brand: var(--brand);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -39,92 +37,226 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: calc(var(--radius) * 1.2);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.8);
+
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  color-scheme: dark;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Sysvelop tokens */
+  --surface: #0b0d16;
+  --surface-raised: #11141f;
+  --border-strong: rgb(255 255 255 / 0.16);
+  --brand: #003cff; /* exact logo blue: logo only */
+  --signal: #1f4bff; /* UI accent: 3.4:1 on background, white label 6.0:1 */
+  --signal-text: #7a93ff; /* accent text: 7.2:1 */
+  --signal-glow: rgb(31 75 255 / 0.3);
+  --highlight: #3dd6f5;
+
+  /* shadcn mapping */
+  --background: #05060b;
+  --foreground: #f4f5f9;
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--foreground);
+  --primary: var(--signal);
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-raised);
+  --muted-foreground: #9aa0b4; /* 7.8:1 on background */
+  --accent: var(--surface-raised);
+  --accent-foreground: var(--foreground);
+  --destructive: #ff7a7a;
+  --border: rgb(255 255 255 / 0.08);
+  --input: rgb(255 255 255 / 0.16);
+  --ring: #5b7bff;
+  --radius: 0.625rem;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+    @apply border-border;
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11";
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: rgb(31 75 255 / 0.45);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: calc(1200px + 2 * 4rem);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .container-x {
+      padding-inline: 2.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-x {
+      padding-inline: 4rem;
+    }
+  }
+
+  /* One card recipe for the whole page. */
+  .card-surface {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.035), transparent 40%),
+      var(--surface);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+    transition:
+      border-color 200ms var(--ease-out-soft),
+      box-shadow 200ms var(--ease-out-soft);
+  }
+  .card-surface:hover {
+    border-color: var(--border-strong);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 0 0 1px rgb(31 75 255 / 0.08),
+      0 24px 60px -30px var(--signal-glow);
+  }
+
+  /* Hero ground: vertical light streaks + one glow. Static, no blur, no image. */
+  .hero-ground {
+    background:
+      radial-gradient(45% 38% at 50% 68%, rgb(31 75 255 / 0.32), transparent 70%),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 38px,
+        rgb(70 110 255 / 0.07) 38px 41px,
+        transparent 41px 83px,
+        rgb(70 110 255 / 0.045) 83px 90px,
+        transparent 90px 131px,
+        rgb(120 150 255 / 0.06) 131px 133px,
+        transparent 133px 170px
+      );
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, #000 78%, transparent 100%);
+  }
+
+  .wordmark-fade {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.11) 10%, rgb(255 255 255 / 0) 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ---------- Hero ambient animation (one 9s cycle: booking card + node lines) ----------
+   Default styles are the FINAL state, so reduced motion and no-JS show it statically. */
+
+.bk-cursor,
+.nl-pulse {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bk-select {
+    animation: bk-select 9s var(--ease-out-soft) infinite;
+  }
+  .bk-cursor {
+    animation: bk-cursor 9s var(--ease-out-soft) infinite;
+  }
+  .bk-confirm {
+    animation: bk-confirm 9s var(--ease-out-soft) infinite;
+  }
+  .bk-reminder {
+    animation: bk-reminder 9s var(--ease-out-soft) infinite;
+  }
+  .nl-draw {
+    animation: nl-draw 1.6s var(--ease-out-soft) both;
+  }
+  .nl-pulse-in {
+    animation: nl-pulse-in 9s linear infinite;
+  }
+  .nl-pulse-out {
+    animation: nl-pulse-out 9s linear infinite;
+  }
+  [data-paused] :is(.bk-select, .bk-cursor, .bk-confirm, .bk-reminder, .nl-pulse-in, .nl-pulse-out) {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes bk-select {
+  0%, 25% { opacity: 0; transform: scale(0.985); }
+  29%, 92% { opacity: 1; transform: none; }
+  97%, 100% { opacity: 0; transform: none; }
+}
+@keyframes bk-cursor {
+  0% { opacity: 0; transform: translate(56px, 40px); }
+  8% { opacity: 1; transform: translate(56px, 40px); }
+  22% { opacity: 1; transform: translate(0, 0); }
+  25% { opacity: 1; transform: translate(0, 0) scale(0.86); }
+  28% { opacity: 1; transform: translate(0, 0) scale(1); }
+  36%, 100% { opacity: 0; transform: translate(0, 0); }
+}
+@keyframes bk-confirm {
+  0%, 40% { opacity: 0; transform: translateY(6px); }
+  45%, 92% { opacity: 1; transform: none; }
+  97%, 100% { opacity: 0; transform: none; }
+}
+@keyframes bk-reminder {
+  0%, 56% { opacity: 0; transform: translateY(6px); }
+  61%, 92% { opacity: 1; transform: none; }
+  97%, 100% { opacity: 0; transform: none; }
+}
+@keyframes nl-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+/* pathLength=1, dasharray "0.12 2": one short dash travels the path. */
+@keyframes nl-pulse-in {
+  0%, 2% { stroke-dashoffset: 0.12; opacity: 0; }
+  4% { opacity: 1; }
+  22% { stroke-dashoffset: -1; opacity: 1; }
+  23%, 100% { stroke-dashoffset: -1; opacity: 0; }
+}
+@keyframes nl-pulse-out {
+  0%, 44% { stroke-dashoffset: 0.12; opacity: 0; }
+  46% { opacity: 1; }
+  66% { stroke-dashoffset: -1; opacity: 1; }
+  67%, 100% { stroke-dashoffset: -1; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
