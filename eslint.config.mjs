@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Third-party agent skills and QA output are not project code.
+    ".agents/**",
+    ".claude/**",
+    "qa/**",
+    "test-results/**",
+    "playwright-report/**",
   ]),
 ]);
 
