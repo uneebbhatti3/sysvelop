@@ -16,25 +16,25 @@ Work in phases. Stop at each **CHECKPOINT** and wait for the owner's approval be
 
 ## Phase 1: Foundation
 
-- [ ] Design tokens in `globals.css`, mapped to shadcn variables
-- [ ] Fonts via `next/font` (Geist Sans, Geist Mono)
-- [ ] Root layout, metadata, skip link, focus styles
-- [ ] `src/content/` files: `site.ts`, `proof.ts` (empty values), `projects.ts` (empty), `faq.ts`
-- [ ] Shared components: Logo, Nav (desktop and mobile), Eyebrow, Footer shell
-- [ ] QA loop on the empty shell
+- [x] Design tokens in `globals.css`, mapped to shadcn variables
+- [x] Fonts via `next/font` (Geist Sans, Geist Mono)
+- [x] Root layout, metadata, skip link, focus styles
+- [x] `src/content/` files: `site.ts`, `proof.ts` (empty values), `projects.ts` (empty), `faq.ts`
+- [x] Shared components: Logo, Nav (desktop and mobile), Eyebrow, Footer shell
+- [x] QA loop on the empty shell
 
 ## Phase 2: Sections
 
 Build one at a time; run the QA loop after each.
 
-- [ ] Hero (headline as LCP, booking card, node lines, light streaks)
-- [ ] Proof strip (renders only with data)
-- [ ] Why one system (bento with code-built mini diagrams)
-- [ ] Services (Build / Automate / Grow)
-- [ ] Work (data-driven; hidden when empty)
-- [ ] FAQ (accordion)
-- [ ] Final call to action
-- [ ] Footer with oversized wordmark
+- [x] Hero (headline as LCP, booking card, node lines, light streaks)
+- [x] Proof strip (renders only with data)
+- [x] Why one system (bento with code-built mini diagrams)
+- [x] Services (Build / Automate / Grow)
+- [x] Work (data-driven; hidden when empty)
+- [x] FAQ (accordion)
+- [x] Final call to action (form UI only; submission is wired in Phase 3)
+- [x] Footer with oversized wordmark
 
 **CHECKPOINT 2:** share desktop and mobile screenshots of the full page. Wait for design feedback.
 
