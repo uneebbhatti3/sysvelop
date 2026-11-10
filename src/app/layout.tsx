@@ -1,17 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { site, uiLabels } from "@/content/site";
+import { Nav } from "@/components/shared/nav";
+import { Footer } from "@/components/sections/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["500"],
   display: "swap",
 });
 
@@ -23,13 +26,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05060b",
-  colorScheme: "dark",
+  themeColor: "#f7f7f4",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
@@ -37,7 +40,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           {uiLabels.skipLink}
         </a>
-        {children}
+        <div id="top" className="flex min-h-full flex-1 flex-col">
+          <Nav />
+          <main id="main" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

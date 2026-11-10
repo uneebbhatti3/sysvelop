@@ -8,9 +8,9 @@ const buttonVariantsBase = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_10px_30px_-12px_var(--signal-glow)] hover:bg-[#3358ff]",
+          "bg-primary text-primary-foreground hover:bg-primary/85",
         outline:
-          "border-input bg-white/[0.03] text-foreground hover:border-white/25 hover:bg-white/[0.07] aria-expanded:bg-white/[0.07]",
+          "border-input bg-transparent text-foreground hover:border-foreground/40 hover:bg-foreground/[0.04] aria-expanded:bg-foreground/[0.04]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
@@ -32,7 +32,9 @@ const buttonVariantsBase = cva(
           "size-8 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md",
         "icon-lg": "size-10",
         // Sysvelop: 44px tap target for page-level actions.
-        cta: "h-11 gap-2 rounded-[10px] px-5 text-[15px] hover:-translate-y-px",
+        cta: "h-11 gap-2 rounded-full px-5 text-[15px]",
+        // Sysvelop: large pill for hero and section actions.
+        pill: "h-12 gap-3 rounded-full px-6 text-[15px] md:h-14 md:px-7",
       },
     },
     defaultVariants: {

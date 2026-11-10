@@ -14,7 +14,7 @@ export function Work() {
         <SectionHeader id="work-heading" eyebrow={work.eyebrow} heading={work.heading} />
         <ul className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
           {projects.map((p) => (
-            <li key={p.slug} className="card-surface flex flex-col overflow-hidden">
+            <li key={p.slug} className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface">
               {p.image ? (
                 <div className="overflow-hidden border-b border-border">
                   <Image
@@ -32,20 +32,20 @@ export function Work() {
                   {p.results.map((r) => (
                     <div key={r.label} className="flex flex-col gap-1">
                       <dt className="order-2 text-sm text-muted-foreground">{r.label}</dt>
-                      <dd className="order-1 text-3xl font-[560] tracking-[-0.03em]">{r.value}</dd>
+                      <dd className="order-1 display text-4xl">{r.value}</dd>
                     </div>
                   ))}
                 </dl>
                 <div className="flex items-center gap-3">
-                  <h3 className="text-xl font-[560]">{p.name}</h3>
-                  <span className="rounded-full border border-border px-2.5 py-1 font-mono text-[12px] text-muted-foreground">
+                  <h3 className="display text-2xl">{p.name}</h3>
+                  <span className="rounded-full border border-border px-2.5 py-1 text-[12px] text-muted-foreground">
                     {p.kind}
                   </span>
                 </div>
                 <p className="text-base leading-relaxed text-muted-foreground">{p.summary}</p>
                 <ul className="mt-auto flex flex-wrap gap-2">
                   {p.stack.map((s) => (
-                    <li key={s} className="rounded-md bg-white/[0.04] px-2 py-1 font-mono text-[12px] text-muted-foreground">
+                    <li key={s} className="rounded-md bg-surface-raised px-2 py-1 text-[12px] text-muted-foreground">
                       {s}
                     </li>
                   ))}

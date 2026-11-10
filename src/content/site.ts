@@ -16,9 +16,12 @@ export type NavLink = { label: string; href: string; requiresWork?: boolean };
 
 export const nav = {
   links: [
-    { label: "Services", href: "#services" },
-    { label: "Work", href: "#work", requiresWork: true },
-    { label: "FAQ", href: "#faq" },
+    { label: "Services", href: "/services" },
+    { label: "Industries", href: "/#industries" },
+    { label: "Engagements", href: "/#engagements" },
+    { label: "Work", href: "/#work", requiresWork: true },
+    { label: "FAQ", href: "/#faq" },
+    // Every page ends with the contact section, so the in-page anchor always resolves.
     { label: "Contact", href: "#contact" },
   ] satisfies NavLink[],
   cta: { label: "Start a project", href: "#contact" },
@@ -30,8 +33,6 @@ export const uiLabels = {
   openMenu: "Open menu",
   menuTitle: "Menu",
   closeMenu: "Close menu",
-  pauseAnimation: "Pause animation",
-  playAnimation: "Play animation",
   homeLink: "Sysvelop home",
 };
 
@@ -42,13 +43,12 @@ export const hero = {
     "Websites, apps, and AI automation for small businesses: fast to load, simple to book, and engineered to run without constant attention.",
   primary: { label: "Start a project", href: "#contact" },
   secondary: { label: "See our work", href: "#work" },
-  booking: {
-    label: "Booking",
-    slots: ["Tue 09:30", "Tue 10:30", "Tue 11:30"],
-    selectedIndex: 1,
-    confirmed: "Confirmed",
-    followUp: "Reminder scheduled",
-  },
+  // TODO(owner): PROPOSED copy (docs/CONTENT.md §1), awaiting approval.
+  indexLabel: "What we build",
+  secondaryAlt: { label: "Explore services", href: "#services" },
+  scrollCue: "Scroll to explore",
+  orbitLabels: ["Websites", "Apps", "AI automation"],
+  regions: "Working with small businesses across the United States, United Kingdom, UAE, and Canada.",
 } as const;
 
 export const why = {
@@ -80,6 +80,8 @@ export const why = {
   ],
 } as const;
 
+// Group titles and lines are approved; `short` is PROPOSED (docs/CONTENT.md §4).
+// The services inside each group live in src/content/services.ts.
 export const services = {
   eyebrow: "Services",
   heading: "Build it. Automate it. Grow it.",
@@ -87,25 +89,86 @@ export const services = {
     {
       id: "build",
       title: "Build",
+      short: "Websites, web apps, mobile apps, UI/UX design",
       line: "Websites, web apps, and mobile apps, designed for clarity and engineered for speed.",
-      items: ["Business websites", "Web applications", "Mobile apps", "UI/UX design"],
     },
     {
       id: "automate",
       title: "Automate",
+      short: "Booking, lead follow-up, AI assistants, integrations",
       line: "AI workflows and integrations that take repetitive work off your plate.",
-      items: [
-        "Booking and scheduling automation",
-        "Lead capture and follow-up",
-        "AI assistants and automated replies",
-        "Integrations between the tools you already use",
-      ],
     },
     {
       id: "grow",
       title: "Grow",
+      short: "SEO, social media, content for search",
       line: "SEO and social media that bring the right customers to what you've built.",
-      items: ["Technical and on-page SEO", "Social media management", "Content that supports search"],
+    },
+  ],
+} as const;
+
+// TODO(owner): PROPOSED copy (docs/CONTENT.md §4a), awaiting approval.
+// TODO(owner): PROPOSED label for the scrolling discipline strip.
+export const ticker = {
+  label: "Disciplines",
+  items: ["Websites", "Web apps", "Mobile apps", "UI/UX design", "Booking automation", "AI assistants", "Integrations", "SEO", "Social media"],
+} as const;
+
+export const industries = {
+  eyebrow: "Industries",
+  heading: "Built for businesses that serve customers every day.",
+  items: [
+    { name: "Clinics", text: "Online booking, patient intake forms, and appointment reminders." },
+    { name: "Studios", text: "Class schedules, memberships, and booking for fitness, beauty, and creative studios." },
+    { name: "Service providers", text: "Quote requests, job scheduling, and follow-ups for trades and professional services." },
+    { name: "Local brands", text: "Websites and online ordering that help local shops get found and chosen." },
+  ],
+} as const;
+
+// TODO(owner): PROPOSED copy (docs/CONTENT.md §4b), awaiting approval. No prices.
+export const engagements = {
+  eyebrow: "Engagements",
+  heading: "Three ways to start.",
+  items: [
+    {
+      name: "Project build",
+      text: "A defined scope, a fixed quote, and a confirmed timeline for a new website, app, or automation.",
+      bestFor: "New builds and rebuilds",
+    },
+    {
+      name: "Ongoing support",
+      text: "Monthly updates, monitoring, SEO, and improvements after launch, on a retainer.",
+      bestFor: "Live sites and apps",
+    },
+    {
+      name: "Audit",
+      text: "A review of your current website, tools, and workflows, with a written list of what to fix first.",
+      bestFor: "Knowing where to begin",
+    },
+  ],
+  bestForLabel: "Best for",
+  cta: { label: "Discuss your project", href: "#contact" },
+} as const;
+
+// Stack supplied by the owner (Nov 2026). "Tools" extras beyond Docker and GitHub were
+// suggested by Claude. TODO(owner): remove any Sysvelop does not actually use.
+export const technologies = {
+  eyebrow: "Technologies",
+  heading: "The tools behind the systems.",
+  groups: [
+    {
+      name: "Frontend",
+      items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Framer Motion", "GSAP"],
+    },
+    {
+      name: "Backend",
+      items: ["Node.js", "Python", "Express.js", "NestJS", "PHP", "Django", "Flask", "FastAPI"],
+    },
+    { name: "Mobile", items: ["React Native", "Flutter", "Expo"] },
+    { name: "AI and automation", items: ["OpenAI", "Claude", "n8n", "Zapier"] },
+    {
+      name: "Tools",
+      items: ["Docker", "GitHub", "GitHub Actions", "Vercel", "AWS", "Figma", "Postman", "Google Search Console", "Google Analytics"],
     },
   ],
 } as const;

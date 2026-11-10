@@ -1,66 +1,94 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { hero } from "@/content/site";
 import { hasWork } from "@/content/projects";
-import { Eyebrow } from "@/components/shared/eyebrow";
-import { BookingCard } from "@/components/shared/booking-card";
-import { NodeLines } from "@/components/shared/node-lines";
+import { SplitText } from "@/components/shared/split-heading";
 
 export function Hero() {
+  const secondary = hasWork ? hero.secondary : hero.secondaryAlt;
+
   return (
-    <section aria-labelledby="hero-heading" className="relative isolate overflow-hidden">
-      <div aria-hidden="true" className="hero-ground absolute inset-0 -z-10" />
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 -z-10 h-px bg-[linear-gradient(90deg,transparent,rgb(122_147_255/0.5),transparent)]"
-      />
+    <section aria-labelledby="hero-heading" className="relative overflow-hidden">
+      <div className="container-x pt-14 md:pt-24">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="lg:col-span-7">
+            <p className="label text-signal-text">{hero.eyebrow.join(" / ")}</p>
 
-      <div className="container-x flex flex-col items-center pt-16 pb-20 text-center sm:pt-24 md:pb-28">
-        <Eyebrow>
-          {hero.eyebrow.map((item, i) => (
-            <span key={item} className="contents">
-              {i > 0 ? <span aria-hidden="true" className="text-white/25">·</span> : null}
-              {item}
-            </span>
-          ))}
-        </Eyebrow>
-
-        {/* LCP element: plain server-rendered text, never animated or gated. */}
-        <h1
-          id="hero-heading"
-          className="mt-7 max-w-[17ch] text-[clamp(2.25rem,1.2rem+4.5vw,5.25rem)] leading-[1.02] font-[560] tracking-[-0.035em] text-balance"
-        >
-          {hero.headline}
-        </h1>
-
-        <p className="mt-6 max-w-[38rem] text-[17px] leading-relaxed text-pretty text-muted-foreground md:text-[19px]">
-          {hero.subheading}
-        </p>
-
-        <div className="mt-9 flex w-full flex-col items-stretch gap-3 min-[440px]:w-auto min-[440px]:flex-row min-[440px]:items-center">
-          <a href={hero.primary.href} className={buttonVariants({ size: "cta", className: "h-12 px-6" })}>
-            {hero.primary.label}
-            <ArrowUpRight className="size-4" aria-hidden="true" />
-          </a>
-          {hasWork ? (
-            <a
-              href={hero.secondary.href}
-              className={buttonVariants({ variant: "outline", size: "cta", className: "h-12 px-6" })}
+            {/* LCP element: plain server-rendered text. */}
+            <h1
+              id="hero-heading"
+              className="display mt-7 max-w-[13ch] text-[clamp(3rem,1.1rem+6.8vw,7.5rem)] text-balance"
             >
-              {hero.secondary.label}
-            </a>
-          ) : null}
+              <SplitText text={hero.headline} tail={2} />
+            </h1>
+
+            <p className="mt-9 max-w-[34rem] text-[17px] leading-[1.65] text-pretty text-muted-foreground md:text-[19px]">
+              {hero.subheading}
+            </p>
+
+            <div className="mt-10 flex flex-col gap-3 min-[440px]:flex-row">
+              <a href={hero.primary.href} className={buttonVariants({ size: "pill" })}>
+                {hero.primary.label}
+                <ArrowUpRight className="size-4 text-[#9db1ff]" aria-hidden="true" />
+              </a>
+              <a href={secondary.href} className={buttonVariants({ variant: "outline", size: "pill" })}>
+                {secondary.label}
+                <ArrowDown className="size-4 text-signal-text" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+
+          <div className="hidden md:block lg:col-span-5">
+            <Orbit />
+          </div>
         </div>
 
-        <div data-scene className="relative mt-16 w-full md:mt-20 lg:h-[400px] lg:w-[1000px] lg:max-w-full">
-          <div className="hidden lg:block">
-            <NodeLines />
-          </div>
-          <div className="relative mx-auto w-full max-w-[400px] text-left lg:absolute lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
-            <BookingCard />
-          </div>
+        <div className="mt-16 flex flex-col gap-3 border-t border-border py-6 sm:flex-row sm:items-center sm:justify-between md:mt-24">
+          <p className="label max-w-[60ch] leading-relaxed text-muted-foreground">{hero.regions}</p>
+          <p className="flex items-center gap-3 text-sm text-muted-foreground">
+            <span aria-hidden="true" className="h-px w-9 bg-foreground/60" />
+            {hero.scrollCue}
+          </p>
         </div>
       </div>
     </section>
+  );
+}
+
+// Code-built orbit: two rings, travelling dots, a blue core, and three static labels.
+// Decorative only; rotation is disabled under prefers-reduced-motion.
+function Orbit() {
+  const [a, b, c] = hero.orbitLabels;
+  return (
+    <div aria-hidden="true" className="relative mx-auto aspect-square w-full max-w-[520px]">
+      {/* outer ring with travelling dots */}
+      <div className="orbit-spin absolute inset-0 rounded-full border border-signal/25">
+        <span className="absolute top-[14%] left-[14%] size-3 -translate-1/2 rounded-full bg-signal shadow-[0_0_0_6px_rgb(0_60_255/0.12)]" />
+        <span className="absolute right-[6%] bottom-[24%] size-2.5 translate-1/2 rounded-full bg-foreground shadow-[0_0_0_6px_rgb(27_27_27/0.08)]" />
+      </div>
+      {/* inner ring */}
+      <div className="orbit-spin-rev absolute inset-[15%] rounded-full border border-foreground/15">
+        <span className="absolute top-1/2 -left-1 size-2 rounded-full bg-signal/60" />
+      </div>
+      {/* core */}
+      <div className="absolute inset-[30%] rounded-full bg-[radial-gradient(circle_at_34%_30%,#8aa2ff_0%,#003cff_48%,#00135c_100%)] shadow-[0_30px_80px_-20px_rgb(0_60_255/0.55)]">
+        <div className="absolute inset-[18%] rounded-full border border-white/20" />
+        <div className="absolute inset-[38%] rounded-full border border-white/25" />
+      </div>
+      {/* labels */}
+      <Pill className="top-[12%] right-[-2%]">{a}</Pill>
+      <Pill className="top-[46%] left-[-6%]">{b}</Pill>
+      <Pill className="right-[14%] bottom-[6%]">{c}</Pill>
+    </div>
+  );
+}
+
+function Pill({ className, children }: { className: string; children: React.ReactNode }) {
+  return (
+    <span
+      className={`label absolute rounded-full border border-border bg-background px-3.5 py-2 text-[11px] text-foreground shadow-[0_8px_24px_-12px_rgb(27_27_27/0.25)] ${className}`}
+    >
+      {children}
+    </span>
   );
 }

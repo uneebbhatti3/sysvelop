@@ -1,16 +1,15 @@
 import { cn } from "@/lib/utils";
 import { uiLabels } from "@/content/site";
 
-// TODO(owner): temporary live-text wordmark. The supplied logo (public/logo.png) is a
-// 101x23 PNG with near-black letters that disappear on the dark theme. Replace with
-// the official SVG (light version) when supplied. The blue "v" echoes the logo.
-export function Logo({ className, href = "#top" }: { className?: string; href?: string }) {
+// TODO(owner): temporary live-text wordmark. Replace with the official SVG logo when
+// supplied (public/logo.png is only 101x23). The blue "v" echoes the logo.
+export function Logo({ className, href = "/" }: { className?: string; href?: string }) {
   return (
     <a
       href={href}
       aria-label={uiLabels.homeLink}
       className={cn(
-        "inline-flex h-11 items-center rounded-md text-[22px] leading-none font-semibold tracking-[-0.04em] text-foreground",
+        "inline-flex h-11 items-center rounded-md font-display text-[24px] leading-none font-medium tracking-[-0.05em] text-foreground",
         className,
       )}
     >

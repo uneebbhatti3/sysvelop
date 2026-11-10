@@ -1,38 +1,80 @@
-import { buttonVariants } from "@/components/ui/button";
-import { nav } from "@/content/site";
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+import { nav, services } from "@/content/site";
+import { serviceHref, servicePageLabels, servicesInGroup } from "@/content/services";
 import { hasWork } from "@/content/projects";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 
+const linkClass =
+  "label inline-flex h-11 items-center gap-1 rounded-md px-3 text-foreground transition-colors hover:text-signal-text";
+
 export function Nav() {
   const links = nav.links.filter((l) => !l.requiresWork || hasWork);
+  const groups = services.groups.map((g) => ({ ...g, items: servicesInGroup(g.id) }));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background">
-      <div className="container-x flex h-16 items-center justify-between gap-4">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
+      <div className="container-x relative flex h-18 items-center justify-between gap-4">
         <Logo />
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-1">
-            {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  className="inline-flex h-11 items-center rounded-md px-3 text-[15px] text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
+            {links.map((l) =>
+              l.href === "/services" ? (
+                // Services dropdown: opens on hover and on keyboard focus (focus-within). CSS only.
+                <li key={l.href} className="group flex h-18 items-center">
+                  <Link href={l.href} className={linkClass}>
+                    {l.label}
+                    <ChevronDown
+                      className="size-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                  <div className="invisible absolute inset-x-6 top-full pt-px opacity-0 transition-opacity duration-150 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 md:inset-x-10 xl:inset-x-16">
+                    <div className="grid grid-cols-3 gap-8 rounded-b-[3px] border border-t-0 border-border bg-popover p-8 shadow-[0_24px_48px_-24px_rgb(27_27_27/0.25)]">
+                      {groups.map((g) => (
+                        <div key={g.id}>
+                          <p className="label border-b border-border pb-3 text-signal-text">
+                            {g.title}
+                          </p>
+                          <ul className="mt-2">
+                            {g.items.map((s) => (
+                              <li key={s.slug}>
+                                <Link
+                                  href={serviceHref(s.slug)}
+                                  className="flex min-h-11 items-center rounded-md px-2 -mx-2 text-[15px] text-foreground transition-colors hover:bg-tint hover:text-signal-text"
+                                >
+                                  {s.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                      <Link
+                        href="/services"
+                        className="col-span-3 -mb-2 inline-flex min-h-11 items-center text-sm font-medium text-signal-text hover:underline"
+                      >
+                        {servicePageLabels.allServices}
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              ) : (
+                <li key={l.href}>
+                  <Link href={l.href} className={linkClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ),
+            )}
           </ul>
         </nav>
         <div className="flex items-center gap-2">
-          <a
-            href={nav.cta.href}
-            className={buttonVariants({ size: "cta", className: "hidden min-[400px]:inline-flex" })}
-          >
+          <a href={nav.cta.href} className="label hidden h-11 items-center border border-foreground px-4 text-foreground transition-colors hover:bg-foreground hover:text-background min-[400px]:inline-flex">
             {nav.cta.label}
           </a>
-          <MobileMenu links={links} cta={nav.cta} />
+          <MobileMenu links={links} cta={nav.cta} groups={groups.map((g) => ({ id: g.id, title: g.title, items: g.items.map((s) => ({ name: s.name, href: serviceHref(s.slug) })) }))} />
         </div>
       </div>
     </header>

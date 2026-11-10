@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 // Until then, submit runs native validation and sends nothing.
 
 const field =
-  "w-full rounded-[10px] border border-input bg-background/70 px-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground hover:border-white/25 focus-visible:border-ring";
+  "w-full rounded-[3px] border border-input bg-transparent px-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground hover:border-foreground/40 focus-visible:border-ring";
 
 export function ContactForm() {
   const f = contactForm.fields;
@@ -52,7 +52,7 @@ export function ContactForm() {
         <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
-      <button type="submit" className={buttonVariants({ size: "cta", className: "mt-2 h-12 w-full sm:w-auto sm:self-start" })}>
+      <button type="submit" className={buttonVariants({ size: "pill", className: "mt-2 w-full sm:w-auto sm:self-start" })}>
         {contactForm.submit}
       </button>
       <p className="text-sm leading-relaxed text-muted-foreground">

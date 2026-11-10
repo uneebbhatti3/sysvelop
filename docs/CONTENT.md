@@ -20,7 +20,7 @@ Items marked **[CONFIRM]** depend on an owner decision (see `docs/PRD.md` §10).
 
 ## Navigation
 
-Links: Services · Work · FAQ · Contact
+Links: Services (→ /services, with a dropdown of all 11 services) · Industries · Engagements · Work · FAQ · Contact **[PROPOSED: Industries, Engagements, dropdown]**
 Button: Start a project
 
 ---
@@ -33,12 +33,13 @@ Button: Start a project
 - **Primary button:** Start a project
 - **Secondary button:** See our work
 
-**Hero visual (code-built booking card; illustrative, no real customer data):**
+**Hero service index [PROPOSED]** (replaces the booking card, Nov 2026 redesign):
 
-- Card label: Booking
-- Rows: Tue 09:30 · Tue 10:30 · Tue 11:30 (one slot becomes selected)
-- Confirmed state: Confirmed
-- Follow-up line: Reminder scheduled
+- Index label: What we build
+- 01 Build: Websites, web apps, mobile apps, UI/UX design
+- 02 Automate: Booking, lead follow-up, AI assistants, integrations
+- 03 Grow: SEO, social media, content for search
+- Regions line: Working with small businesses across the United States, United Kingdom, UAE, and Canada.
 
 ---
 
@@ -95,6 +96,58 @@ SEO and social media that bring the right customers to what you've built.
 - Technical and on-page SEO
 - Social media management
 - Content that supports search
+
+**Service descriptions [PROPOSED]** (one line under each service item):
+
+- Business websites: Sites that load fast, explain what you do, and turn visits into enquiries.
+- Web applications: Customer portals, dashboards, and internal tools built around how your business runs.
+- Mobile apps: iOS and Android apps for booking, loyalty, and the services your customers use every week.
+- UI/UX design: Clear interfaces and a consistent design system, so every screen looks and works the same way.
+- Booking and scheduling automation: Online booking connected to your calendar, with confirmations and reminders sent for you.
+- Lead capture and follow-up: Every enquiry captured, routed to the right place, and followed up on time.
+- AI assistants and automated replies: Assistants that answer common questions and qualify enquiries using your own information.
+- Integrations between the tools you already use: Your CRM, calendar, payments, and email working from the same data.
+- Technical and on-page SEO: Structure, speed, and metadata set up so search engines understand what you offer.
+- Social media management: Planned, consistent posting that keeps your business visible between visits.
+- Content that supports search: Service pages and articles written around what your customers search for.
+
+---
+
+## 4a. Industries [PROPOSED]
+
+- **Eyebrow:** Industries
+- **Heading:** Built for businesses that serve customers every day.
+- **Clinics:** Online booking, patient intake forms, and appointment reminders.
+- **Studios:** Class schedules, memberships, and booking for fitness, beauty, and creative studios.
+- **Service providers:** Quote requests, job scheduling, and follow-ups for trades and professional services.
+- **Local brands:** Websites and online ordering that help local shops get found and chosen.
+
+---
+
+## 4b. Engagements [PROPOSED]
+
+No prices.
+
+- **Eyebrow:** Engagements
+- **Heading:** Three ways to start.
+- **Project build:** A defined scope, a fixed quote, and a confirmed timeline for a new website, app, or automation. Best for: New builds and rebuilds
+- **Ongoing support:** Monthly updates, monitoring, SEO, and improvements after launch, on a retainer. Best for: Live sites and apps
+- **Audit:** A review of your current website, tools, and workflows, with a written list of what to fix first. Best for: Knowing where to begin
+- **Link:** Discuss your project
+
+---
+
+## 4c. Technologies (stack supplied by owner, Nov 2026)
+
+Items marked * were suggested additions; owner to confirm.
+
+- **Eyebrow:** Technologies
+- **Heading:** The tools behind the systems. [PROPOSED]
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS, shadcn/ui, Framer Motion, GSAP
+- **Backend:** Node.js, Python, Express.js, NestJS, PHP, Django, Flask, FastAPI
+- **Mobile:** React Native, Flutter, Expo
+- **AI and automation:** OpenAI, Claude, n8n, Zapier
+- **Tools:** Docker, GitHub, GitHub Actions*, Vercel*, AWS*, Figma*, Postman*, Google Search Console*, Google Analytics*
 
 ---
 
@@ -158,6 +211,20 @@ A short description of your business, what you want the system to do, and any ex
 - **Contact email:** {supplied by owner} **[CONFIRM]**
 - **Copyright:** © {current year} Sysvelop. All rights reserved.
 - **Oversized background wordmark:** Sysvelop
+
+---
+
+## 9. Service pages [PROPOSED]
+
+One page per service at `/services/{slug}`, plus `/services` listing them all. The full copy for each page
+(summary, intro, four "What's included" items, three "A good fit when" lines, related services) lives in
+`src/content/services.ts`; review it there. Service names and group lines are already approved.
+
+- **Page labels:** Home · Services (breadcrumb) · What's included · A good fit when · Related services · All services
+- **/services intro:** uses the approved one-liner.
+- **/services meta description:** Websites, web and mobile apps, UI/UX design, booking automation, AI assistants, integrations, SEO, and social media for small businesses.
+- **Service page title / description:** "{Service name} | Sysvelop" / the service summary.
+- **Slugs:** business-websites, web-applications, mobile-apps, ui-ux-design, booking-automation, lead-follow-up, ai-assistants, integrations, technical-seo, social-media, search-content
 
 ---
 

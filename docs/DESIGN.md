@@ -1,5 +1,17 @@
 # Design Direction: Sysvelop Website
 
+> **Direction change (Nov 2026, owner request): editorial studio style.** Overrides §3 to §8 where they conflict.
+> - Inspired by the layout language of an owner-supplied reference site (studied, not copied: no text, imagery or brand colour reused).
+> - Colours: paper #f7f7f4, ink #1b1b1b, muted #6b6b68 (body) / dim #8a8a86 (large display only), logo blue #003cff as the
+>   single accent, light-blue band #cdd9ff, blue wash #e6ecff on cards. Contact section and footer are an ink band (`.theme-ink`).
+> - Type: Space Grotesk 500 for display (`.display`, tracking -0.055em, line-height 0.92), DM Sans for body,
+>   uppercase tracked `.label` for eyebrows and nav. Headings dim their last words (`SplitText`, visual only).
+> - Components: pill buttons (ink filled / outlined), square outlined nav button, numbered-circle tint cards,
+>   oversized numbered service rows, timeline list on the blue band, scrolling discipline ticker.
+> - Motion: slow CSS orbit in the hero and the ticker, both static under prefers-reduced-motion.
+> - Not adopted (CLAUDE.md rules): process section, team/founder card, client logos, testimonials, stat counters.
+> - Pages: `/` (Hero, Why, Services, Industries, Work, Engagements, Technologies, Ticker, FAQ, Contact), `/services`, `/services/[slug]`.
+
 Goal: a futuristic, modern, restrained site that reads as established and technically excellent. The design must also be fast: the site is itself the proof of Sysvelop's speed claim.
 
 ## 1. How to use the reference images
