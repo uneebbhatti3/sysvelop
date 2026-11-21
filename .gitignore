@@ -52,5 +52,6 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/.playwright-mcp/
 /qa/screenshots/
 /qa/*.mjs

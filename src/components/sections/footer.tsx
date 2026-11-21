@@ -3,6 +3,7 @@ import { footer, nav, services, site } from "@/content/site";
 import { serviceHref, servicesInGroup } from "@/content/services";
 import { hasWork } from "@/content/projects";
 import { Logo } from "@/components/shared/logo";
+import { Reveal } from "@/components/motion/reveal";
 
 // The year is cached at render time (cacheComponents forbids new Date() in the static shell).
 async function CurrentYear() {
@@ -64,15 +65,6 @@ export function Footer() {
                   </li>
                 ))}
             </Column>
-            <ul className="flex flex-col lg:flex-row lg:gap-5">
-              {footer.legal.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className={linkClass}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </nav>
         </div>
 
@@ -82,12 +74,13 @@ export function Footer() {
         </div>
       </div>
 
-      <div
-        aria-hidden="true"
+      <Reveal
+        variant="rise"
+        aria-hidden
         className="wordmark-fade pointer-events-none mt-6 -mb-[0.2em] text-center text-[clamp(5rem,23vw,22rem)] leading-[0.85] font-display font-medium tracking-[-0.07em] select-none"
       >
         {footer.wordmark}
-      </div>
+      </Reveal>
     </footer>
   );
 }

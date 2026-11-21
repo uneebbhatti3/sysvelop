@@ -1,6 +1,7 @@
 import { faq } from "@/content/faq";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Reveal } from "@/components/motion/reveal";
 
 export function Faq() {
   return (
@@ -14,7 +15,8 @@ export function Faq() {
           stacked
           className="lg:col-span-4"
         />
-        <Accordion className="lg:col-span-7 lg:col-start-6">
+        <Reveal className="lg:col-span-7 lg:col-start-6">
+        <Accordion>
           {faq.items.map((item, i) => (
             <AccordionItem key={item.q} value={item.q} className="border-b border-border first:border-t first:border-t-foreground/80">
               <AccordionTrigger className="items-center gap-6 rounded-none py-7 text-left hover:no-underline">
@@ -31,6 +33,7 @@ export function Faq() {
             </AccordionItem>
           ))}
         </Accordion>
+        </Reveal>
       </div>
     </section>
   );

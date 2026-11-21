@@ -41,7 +41,7 @@ Build one at a time; run the QA loop after each.
 ## Phase 3: Contact form and security
 
 - [ ] Zod schema shared by client and server
-- [ ] Server action with honeypot, rate limit, and email sending
+- [ ] Server action with honeypot, storing enquiries in Postgres (no email, no submission rate limit: owner decisions)
 - [ ] Success, error, and loading states
 - [ ] Security headers and CSP per `docs/SECURITY.md`
 - [ ] Test every case in `docs/QA.md` §2
@@ -50,7 +50,6 @@ Build one at a time; run the QA loop after each.
 
 - [ ] Motion pass (entrances, hover states, reduced-motion handling)
 - [ ] Metadata, Open Graph image, JSON-LD, sitemap, robots
-- [ ] Privacy and Terms pages (draft text clearly marked for owner review)
 - [ ] 404 page
 - [ ] Analytics and Speed Insights (cookieless), loaded after idle
 
@@ -69,6 +68,5 @@ Build one at a time; run the QA loop after each.
 - [ ] Supply real projects and honest labels (`projects.ts`)
 - [ ] Supply contact email and social links
 - [ ] Set production environment variables
-- [ ] Review Privacy and Terms text
 - [ ] Confirm `/reference/*` returns 404 on the deployed site
 - [ ] Re-run Lighthouse on the live URL

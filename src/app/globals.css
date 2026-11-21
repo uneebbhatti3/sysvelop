@@ -42,6 +42,18 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
 
+  /* Admin dashboard (shadcn sidebar + charts). */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -91,6 +103,17 @@
   --input: rgb(27 27 27 / 0.24);
   --ring: #003cff;
   --radius: 0.25rem;
+
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--signal);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--surface-raised);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+  --chart-1: var(--signal);
+  --chart-2: #8aa2ff;
 }
 
 /* Ink band: local dark tokens for the contact section and footer. */
@@ -193,6 +216,20 @@
   }
 }
 
+/* Arrow nudge on hover for icon arrows inside buttons and linked rows. */
+.nudge,
+.nudge-down {
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  :is(.group, .group\/button):hover .nudge {
+    transform: translate(2px, -2px);
+  }
+  :is(.group, .group\/button):hover .nudge-down {
+    transform: translateY(2px);
+  }
+}
+
 /* Ambient motion: hero orbit and the discipline ticker. Static under reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   .orbit-spin {
@@ -209,6 +246,17 @@
   }
   .ticker:hover .ticker-track {
     animation-play-state: paused;
+  }
+  /* Hero entrance: CSS only so it never waits on JavaScript. The h1 (LCP) never uses it. */
+  .rise {
+    animation: rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
 }
 @keyframes orbit-spin {

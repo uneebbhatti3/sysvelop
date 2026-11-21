@@ -40,7 +40,7 @@ Build the marketing website for Sysvelop. The site must convince a small-busines
 **In scope (launch):**
 - Single-page home with anchored sections
 - Working contact form
-- Privacy and Terms pages
+- No Privacy or Terms pages (owner decision, Nov 2026)
 - 404 page, sitemap, robots, Open Graph image, structured data
 - Dark theme only
 
@@ -65,7 +65,7 @@ Copy for every section is in `docs/CONTENT.md`. Visual direction is in `docs/DES
 9. **Footer:** logo, short descriptor, nav links, contact email, legal links, copyright, oversized faded wordmark.
 
 ### Other routes
-- `/privacy`, `/terms`: standard policy pages (placeholder legal text must be clearly marked for review; see Open Decisions).
+- No `/privacy` or `/terms` pages (owner decision, Nov 2026).
 - `not-found`: on-brand 404 with a link home.
 
 ## 7. Functional requirements
@@ -73,7 +73,7 @@ Copy for every section is in `docs/CONTENT.md`. Visual direction is in `docs/DES
 **Contact form**
 - Fields: name (required), email (required), company (optional), what you need (select: Website, App, AI automation, SEO or social media, Not sure), message (required), hidden honeypot.
 - Client and server validation with the same schema. Clear inline errors. Success and failure states. No page reload.
-- Submissions are emailed to the Sysvelop inbox (see Open Decisions). Rate-limited and spam-protected per `docs/SECURITY.md`.
+- Submissions are stored in Postgres (Neon) and reviewed in the password-protected admin dashboard at `/admin`. No email notification and no submission rate limit (owner decisions, Nov 2026). Spam-protected by a honeypot per `docs/SECURITY.md`.
 
 **Proof and projects data**
 - `proof.ts` entries carry `label`, `value`, and `source` (for example a PageSpeed report URL and date). A metric without a value does not render.
@@ -105,13 +105,13 @@ These need an answer from the owner. Until answered, use the stated default and 
 | # | Decision | Default until answered |
 |---|---|---|
 | 1 | Logo files and brand colours | Place the logo in `/public/brand/`. Derive the accent colour from it. If unavailable, use the proposed palette in DESIGN.md |
-| 2 | Where contact enquiries are delivered (email address and sending provider) | Resend + one inbox address supplied via environment variables |
+| 2 | Where contact enquiries are delivered (email address and sending provider) | **Decided:** stored in Neon Postgres, viewed in the `/admin` dashboard, kept 12 months. No email provider. |
 | 3 | Production domain | Use `NEXT_PUBLIC_SITE_URL` env var; no hard-coded domain |
 | 4 | Real proof numbers (PageSpeed result, bookings handled) and their sources | Strip hidden until supplied |
 | 5 | Which projects appear in Work, and whether each is a client project or a studio project | Section hidden until supplied |
 | 6 | Public contact email and social profile links | Footer shows only what is supplied |
 | 7 | Hosting and analytics | Assumed Vercel with cookieless Vercel Analytics and Speed Insights; confirm |
-| 8 | Legal text for Privacy and Terms | Generate a clearly marked draft; owner must review before launch |
+| 8 | Legal text for Privacy and Terms | **Decided:** no Privacy or Terms pages (owner decision, Nov 2026). |
 | 9 | Whether to add a calendar-booking embed for discovery calls | Not at launch; contact form only |
 
 ## 11. Acceptance criteria
@@ -121,7 +121,7 @@ The launch is complete when all of the following hold:
 1. Every section in §6 is built and matches `docs/CONTENT.md` verbatim.
 2. Mobile Lighthouse (production build): Performance ≥ 95; Accessibility, Best Practices, SEO ≥ 95.
 3. No console errors, no failed network requests, no horizontal scroll at 320px.
-4. Contact form works end to end, including validation, honeypot, and rate limiting.
+4. Contact form works end to end, including validation and honeypot.
 5. No banned words, no team or founder references, and no invented proof anywhere in the rendered site.
 6. Security headers from `docs/SECURITY.md` verified on the production build.
 7. All `TODO(owner):` items are either resolved or listed in a handover note.

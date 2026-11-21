@@ -36,6 +36,16 @@ for (const width of widths) {
   );
   if (overflow) problems.push(`[${width}] horizontal overflow`);
 
+  // Scroll through once so every scroll reveal fires, then let the last ones settle.
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += window.innerHeight / 3) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(1200);
+
   const file = path.join(outDir, `${label}-${width}.png`);
   await page.screenshot({ path: file, fullPage: true });
   console.log(`saved ${file}`);

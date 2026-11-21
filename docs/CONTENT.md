@@ -200,14 +200,14 @@ A short description of your business, what you want the system to do, and any ex
 - **Success:** Thanks. Your message is in, and we'll be in touch soon.
 - **Error:** Something went wrong sending your message. Please try again, or email us at {contact email}. **[CONFIRM]**
 - **Validation messages:** short and specific, for example "Enter a valid email address."
-- **Privacy line under form:** We use your details only to reply to your enquiry. See our Privacy Policy.
+- **Privacy line under form:** We use your details only to reply to your enquiry.
 
 ---
 
 ## 8. Footer
 
 - **Descriptor:** The digital systems behind growing businesses.
-- **Columns:** Services · Work · FAQ · Contact; Privacy · Terms
+- **Columns:** Services · Work · FAQ · Contact
 - **Contact email:** {supplied by owner} **[CONFIRM]**
 - **Copyright:** © {current year} Sysvelop. All rights reserved.
 - **Oversized background wordmark:** Sysvelop

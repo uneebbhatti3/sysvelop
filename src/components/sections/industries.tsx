@@ -1,5 +1,6 @@
 import { industries } from "@/content/site";
 import { SectionHeader } from "@/components/shared/section-header";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 
 // Light-blue band. Muted text is darkened locally to keep 4.5:1 on the band colour.
 export function Industries() {
@@ -18,10 +19,10 @@ export function Industries() {
           stacked
           className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start"
         />
-        <ol className="relative lg:col-span-6 lg:col-start-7">
-          <span aria-hidden="true" className="absolute top-4 bottom-4 left-[15px] w-px bg-foreground/20" />
+        <Stagger as="ol" stagger={0.12} className="relative lg:col-span-6 lg:col-start-7">
+          <StaggerItem as="span" variant="drawY" aria-hidden className="absolute top-4 bottom-4 left-[15px] w-px origin-top bg-foreground/20" />
           {industries.items.map((item, i) => (
-            <li key={item.name} className="relative grid grid-cols-[2rem_1fr] gap-x-6 py-7 md:py-9">
+            <StaggerItem as="li" key={item.name} className="relative grid grid-cols-[2rem_1fr] gap-x-6 py-7 md:py-9">
               <span
                 aria-hidden="true"
                 className={
@@ -38,9 +39,9 @@ export function Industries() {
                 </h3>
                 <p className="text-[15px] leading-relaxed text-muted-foreground md:pt-1">{item.text}</p>
               </div>
-            </li>
+            </StaggerItem>
           ))}
-        </ol>
+        </Stagger>
       </div>
     </section>
   );

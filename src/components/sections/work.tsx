@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { work } from "@/content/site";
 import { projects } from "@/content/projects";
 import { SectionHeader } from "@/components/shared/section-header";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 
 // Data-driven. Hidden while src/content/projects.ts is empty. Leads with results.
 export function Work() {
@@ -12,9 +13,9 @@ export function Work() {
     <section id="work" aria-labelledby="work-heading" className="border-t border-border py-24 md:py-32">
       <div className="container-x">
         <SectionHeader id="work-heading" eyebrow={work.eyebrow} heading={work.heading} />
-        <ul className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
+        <Stagger as="ul" className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
           {projects.map((p) => (
-            <li key={p.slug} className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface">
+            <StaggerItem as="li" lift key={p.slug} className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface">
               {p.image ? (
                 <div className="overflow-hidden border-b border-border">
                   <Image
@@ -57,9 +58,9 @@ export function Work() {
                   </a>
                 ) : null}
               </div>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </div>
     </section>
   );

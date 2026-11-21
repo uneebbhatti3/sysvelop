@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { site, uiLabels } from "@/content/site";
-import { Nav } from "@/components/shared/nav";
-import { Footer } from "@/components/sections/footer";
+import { site } from "@/content/site";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -30,24 +28,11 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+// Shared shell only. Public chrome lives in (site)/layout.tsx; the admin has its own.
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only z-[60] rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
-        >
-          {uiLabels.skipLink}
-        </a>
-        <div id="top" className="flex min-h-full flex-1 flex-col">
-          <Nav />
-          <main id="main" tabIndex={-1} className="flex-1 outline-none">
-            {children}
-          </main>
-          <Footer />
-        </div>
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { SplitText } from "./split-heading";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 
 // Editorial header: accent label, oversized display heading (last words dimmed), intro on the right.
 export function SectionHeader({
@@ -22,10 +23,13 @@ export function SectionHeader({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col gap-6", className)}>
-      <p className="label text-signal-text">{eyebrow}</p>
+    <Stagger stagger={0.12} className={cn("flex flex-col gap-6", className)}>
+      <StaggerItem as="p" variant="fade" className="label text-signal-text">
+        {eyebrow}
+      </StaggerItem>
       <div className={cn("grid gap-8", !stacked && "lg:grid-cols-12 lg:items-start")}>
-        <h2
+        <StaggerItem
+          as="h2"
           id={id}
           className={cn(
             "display text-balance",
@@ -35,18 +39,19 @@ export function SectionHeader({
           )}
         >
           <SplitText text={heading} tail={tail} />
-        </h2>
+        </StaggerItem>
         {intro ? (
-          <p
+          <StaggerItem
+            as="p"
             className={cn(
               "max-w-[40ch] text-[17px] leading-[1.65] text-pretty text-muted-foreground md:text-lg",
               !stacked && "lg:col-span-4 lg:col-start-9 lg:pt-4",
             )}
           >
             {intro}
-          </p>
+          </StaggerItem>
         ) : null}
       </div>
-    </div>
+    </Stagger>
   );
 }

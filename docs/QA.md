@@ -23,7 +23,6 @@ Report what you verified, with the screenshot paths. Do not claim success withou
   - valid submission shows success
   - empty and invalid inputs show clear inline errors
   - filled honeypot returns a silent success and sends nothing
-  - repeated rapid submissions hit the rate limit with a generic message
   - header-injection input (a newline in the name or email) is rejected or neutralised
 - Keyboard-only: every control reachable in a logical order with a visible focus ring.
 

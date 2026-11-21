@@ -23,7 +23,7 @@ export function PageHero({
   return (
     <section aria-labelledby="page-heading" className="border-b border-border">
       <div className="container-x pt-8 pb-16 md:pt-10 md:pb-24">
-        <nav aria-label="Breadcrumb">
+        <nav aria-label="Breadcrumb" className="rise">
           <ol className="label flex flex-wrap items-center gap-x-3 text-muted-foreground">
             {crumbs.map((c, i) => (
               <li key={c.label} className="flex items-center gap-3">
@@ -42,7 +42,7 @@ export function PageHero({
           </ol>
         </nav>
 
-        <p className="label mt-12 text-signal-text md:mt-20">{eyebrow}</p>
+        <p style={{ "--d": "80ms" } as React.CSSProperties} className="rise label mt-12 text-signal-text md:mt-20">{eyebrow}</p>
         <div className="mt-7 grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-8">
           <h1
             id="page-heading"
@@ -50,11 +50,11 @@ export function PageHero({
           >
             <SplitText text={title} tail={tail} />
           </h1>
-          <div className="flex flex-col items-start gap-8 lg:col-span-4">
+          <div style={{ "--d": "200ms" } as React.CSSProperties} className="rise flex flex-col items-start gap-8 lg:col-span-4">
             <p className="text-[17px] leading-[1.65] text-pretty text-muted-foreground md:text-lg">{intro}</p>
             <a href={nav.cta.href} className={buttonVariants({ size: "pill" })}>
               {nav.cta.label}
-              <ArrowUpRight className="size-4 text-[#9db1ff]" aria-hidden="true" />
+              <ArrowUpRight className="nudge size-4 text-[#9db1ff]" aria-hidden="true" />
             </a>
           </div>
         </div>

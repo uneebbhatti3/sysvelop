@@ -197,16 +197,24 @@ export const contactForm = {
   submit: "Send message",
   sending: "Sending…",
   success: "Thanks. Your message is in, and we'll be in touch soon.",
-  privacyLine: "We use your details only to reply to your enquiry. See our",
-  privacyLinkLabel: "Privacy Policy",
+  // CONTENT.md §7 marks this line [CONFIRM]. The email clause is added only when an address is set.
+  error: "Something went wrong sending your message. Please try again",
+  errorEmailPrefix: "or email us at",
+  // Proposed in the style CONTENT.md §7 asks for ("short and specific"). Awaiting approval.
+  validation: {
+    nameRequired: "Enter your name.",
+    nameTooLong: "Keep your name under 100 characters.",
+    emailInvalid: "Enter a valid email address.",
+    companyTooLong: "Keep the company name under 120 characters.",
+    needInvalid: "Choose what you need.",
+    messageRequired: "Tell us a little about what you need.",
+    messageTooLong: "Keep your message under 4,000 characters.",
+  },
+  privacyLine: "We use your details only to reply to your enquiry.",
 } as const;
 
 export const footer = {
   descriptor: "The digital systems behind growing businesses.",
-  legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Terms", href: "/terms" },
-  ],
   copyright: "Sysvelop. All rights reserved.",
   wordmark: "Sysvelop",
 } as const;
