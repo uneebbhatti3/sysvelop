@@ -41,12 +41,13 @@ Build the marketing website for Sysvelop. The site must convince a small-busines
 - Single-page home with anchored sections
 - Working contact form
 - No Privacy or Terms pages (owner decision, Nov 2026)
+- Testimonials: collected in `/admin/testimonials` or through a client link, shown on the home page after Work once the owner publishes them (owner decision, Nov 2026)
 - 404 page, sitemap, robots, Open Graph image, structured data
 - Dark theme only
 
-**Out of scope (launch):** blog, pricing page or public pricing, testimonials (until real ones exist), client logo wall, team or About-the-people page, live chat, user accounts, CMS, multi-language, light theme.
+**Out of scope (launch):** blog, pricing page or public pricing, client logo wall, team or About-the-people page, live chat, user accounts, general CMS (only case studies and services are editable, in `/admin`: owner decision, Nov 2026), multi-language, light theme.
 
-**Phase 2 candidates:** individual case-study pages at `/work/[slug]`, testimonials section, booking-calendar embed, blog.
+**Phase 2 candidates:** individual case-study pages at `/work/[slug]`, booking-calendar embed, blog.
 
 ## 6. Page and section requirements
 
@@ -59,7 +60,7 @@ Copy for every section is in `docs/CONTENT.md`. Visual direction is in `docs/DES
 3. **Proof strip:** two metrics from `src/content/proof.ts` (mobile load time; bookings handled automatically). Each metric renders only if its value is non-empty. If both are empty, the whole strip does not render.
 4. **Why one system:** short statement plus four cards (speed, booking, automation, findability) in a bento layout.
 5. **Services:** Build / Automate / Grow, each with a short line and a list of items.
-6. **Work:** project cards from `src/content/projects.ts`. Each project is honestly labelled (client project or studio project) and leads with a result, not a technology list. The section hides if the data file is empty.
+6. **Work:** project cards added in `/admin/case-studies` and read through `src/content/projects.ts`. Each project is honestly labelled (client project or studio project) and leads with a result, not a technology list. The section hides while none are published.
 7. **FAQ:** accordion, five questions.
 8. **Final call to action:** banner with the contact form (or a button that scrolls to it).
 9. **Footer:** logo, short descriptor, nav links, contact email, legal links, copyright, oversized faded wordmark.
@@ -77,7 +78,7 @@ Copy for every section is in `docs/CONTENT.md`. Visual direction is in `docs/DES
 
 **Proof and projects data**
 - `proof.ts` entries carry `label`, `value`, and `source` (for example a PageSpeed report URL and date). A metric without a value does not render.
-- `projects.ts` entries carry `slug`, `name`, `kind` ("Client project" or "Studio project"), `summary`, `results[]` (label and value), `stack[]`, optional `url`, optional `image`.
+- Case studies (stored in Postgres, read through `projects.ts`) carry `id`, `name`, `kind` ("Client project" or "Studio project"), `summary`, `results[]` (label and value), `stack[]`, optional `url`, optional `image`.
 
 **Navigation**
 - In-page anchor scrolling with offset for the sticky header. Active-section highlighting is optional.
@@ -104,12 +105,12 @@ These need an answer from the owner. Until answered, use the stated default and 
 
 | # | Decision | Default until answered |
 |---|---|---|
-| 1 | Logo files and brand colours | Place the logo in `/public/brand/`. Derive the accent colour from it. If unavailable, use the proposed palette in DESIGN.md |
+| 1 | Logo files and brand colours | **Decided:** owner-supplied logo in `/public/brand/` (`logo.png`, plus `logo-light.png` for dark bands). Accent is the logo blue. |
 | 2 | Where contact enquiries are delivered (email address and sending provider) | **Decided:** stored in Neon Postgres, viewed in the `/admin` dashboard, kept 12 months. No email provider. |
 | 3 | Production domain | Use `NEXT_PUBLIC_SITE_URL` env var; no hard-coded domain |
 | 4 | Real proof numbers (PageSpeed result, bookings handled) and their sources | Strip hidden until supplied |
 | 5 | Which projects appear in Work, and whether each is a client project or a studio project | Section hidden until supplied |
-| 6 | Public contact email and social profile links | Footer shows only what is supplied |
+| 6 | Public contact email and social profile links | Email **decided:** hello@sysvelop.com. Social links still open; footer shows only what is supplied |
 | 7 | Hosting and analytics | Assumed Vercel with cookieless Vercel Analytics and Speed Insights; confirm |
 | 8 | Legal text for Privacy and Terms | **Decided:** no Privacy or Terms pages (owner decision, Nov 2026). |
 | 9 | Whether to add a calendar-booking embed for discovery calls | Not at launch; contact form only |

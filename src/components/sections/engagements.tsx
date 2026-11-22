@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { engagements } from "@/content/site";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 

@@ -6,8 +6,7 @@ import { refresh } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { auth, requireAdmin } from "@/lib/auth";
-import { hashKey } from "@/lib/crypto";
-import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { rateLimit } from "@/lib/rate-limit";
 import { enquiryStatuses } from "@/lib/schema";
 
 const UNAVAILABLE = "Sign-in is unavailable right now. Try again shortly.";
@@ -21,14 +20,10 @@ export async function login(_prev: LoginState, form: FormData): Promise<LoginSta
   const fail = (error: string): LoginState => ({ error, email });
   if (!email || !password) return fail("Enter your email and password.");
 
-  // 5 attempts per 15 minutes per IP, plus a site-wide backstop of 50 per 15 minutes in case
-  // the platform's IP header can be spoofed. If the limit can't be checked, fail closed.
+  // 5 attempts per 15 minutes per visitor. Better Auth's own limiter doesn't cover server-side
+  // calls like ours, so this is what stops password guessing.
   try {
-    const ip = clientIp(await headers());
-    const limited =
-      !(await rateLimit(hashKey("admin-login", ip), 5, 900)).ok ||
-      !(await rateLimit(hashKey("admin-login", "*global*"), 50, 900)).ok;
-    if (limited) return fail("Too many attempts. Try again in a few minutes.");
+    if (!(await rateLimit("admin-login", 5, 900))) return fail("Too many attempts. Try again in a few minutes.");
   } catch {
     console.error("admin: login_check_failed");
     return fail(UNAVAILABLE);

@@ -1,21 +1,29 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { uiLabels } from "@/content/site";
+import logoDark from "../../../public/brand/logo.png";
+import logoLight from "../../../public/brand/logo-light.png";
 
-// TODO(owner): temporary live-text wordmark. Replace with the official SVG logo when
-// supplied (public/logo.png is only 101x23). The blue "v" echoes the logo.
-export function Logo({ className, href = "/" }: { className?: string; href?: string }) {
+type Tone = "dark" | "light";
+
+// Official logo (430x94, so sharp on 4x screens). "light" has paper lettering, for ink bands.
+// Unoptimised: the files are under 8 KB, and recompressing softens the lettering.
+export function LogoImage({ tone = "dark", className }: { tone?: Tone; className?: string }) {
   return (
-    <a
-      href={href}
-      aria-label={uiLabels.homeLink}
-      className={cn(
-        "inline-flex h-11 items-center rounded-md font-display text-[24px] leading-none font-medium tracking-[-0.05em] text-foreground",
-        className,
-      )}
-    >
-      <span aria-hidden="true">
-        sys<span className="text-signal-text">v</span>elop
-      </span>
+    <Image
+      src={tone === "light" ? logoLight : logoDark}
+      alt=""
+      unoptimized
+      loading={tone === "light" ? "lazy" : "eager"}
+      className={cn("h-6 w-auto shrink-0", className)}
+    />
+  );
+}
+
+export function Logo({ className, href = "/", tone }: { className?: string; href?: string; tone?: Tone }) {
+  return (
+    <a href={href} aria-label={uiLabels.homeLink} className={cn("inline-flex h-11 w-fit shrink-0 items-center rounded-md", className)}>
+      <LogoImage tone={tone} />
     </a>
   );
 }

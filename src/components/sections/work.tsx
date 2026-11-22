@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { work } from "@/content/site";
-import { projects } from "@/content/projects";
+import { getProjects } from "@/content/projects";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 
-// Data-driven. Hidden while src/content/projects.ts is empty. Leads with results.
-export function Work() {
+// Data-driven. Hidden while no case studies are published. Leads with results.
+export async function Work() {
+  const projects = await getProjects();
   if (projects.length === 0) return null;
 
   return (
@@ -15,7 +16,7 @@ export function Work() {
         <SectionHeader id="work-heading" eyebrow={work.eyebrow} heading={work.heading} />
         <Stagger as="ul" className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
           {projects.map((p) => (
-            <StaggerItem as="li" lift key={p.slug} className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface">
+            <StaggerItem as="li" lift key={p.id} className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-surface">
               {p.image ? (
                 <div className="overflow-hidden border-b border-border">
                   <Image
@@ -29,16 +30,17 @@ export function Work() {
                 </div>
               ) : null}
               <div className="flex flex-1 flex-col gap-5 p-7">
-                <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {/* Wraps rather than fixed columns, so a long figure never breaks mid-word. */}
+                <dl className="flex flex-wrap gap-x-8 gap-y-4">
                   {p.results.map((r) => (
-                    <div key={r.label} className="flex flex-col gap-1">
-                      <dt className="order-2 text-sm text-muted-foreground">{r.label}</dt>
-                      <dd className="order-1 display text-4xl">{r.value}</dd>
+                    <div key={r.label} className="flex max-w-full min-w-0 flex-col gap-1">
+                      <dt className="order-2 text-sm break-words text-muted-foreground">{r.label}</dt>
+                      <dd className="order-1 display text-4xl break-words">{r.value}</dd>
                     </div>
                   ))}
                 </dl>
-                <div className="flex items-center gap-3">
-                  <h3 className="display text-2xl">{p.name}</h3>
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="display max-w-full text-2xl break-words">{p.name}</h3>
                   <span className="rounded-full border border-border px-2.5 py-1 text-[12px] text-muted-foreground">
                     {p.kind}
                   </span>

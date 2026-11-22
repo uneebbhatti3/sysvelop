@@ -1,13 +1,13 @@
 "use client";
 
-import { Menu } from "lucide-react";
-import { Sheet, SheetClose, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { buttonVariants } from "@/components/ui/button";
+import * as React from "react";
+import { Menu, X } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { uiLabels, type NavLink } from "@/content/site";
 
 type Group = { id: string; title: string; items: { name: string; href: string }[] };
 
-// Base UI Dialog provides the focus trap, Escape to close, and focus return.
+// Native modal <dialog>: focus trap, Escape to close and focus return come from the browser.
 export function MobileMenu({
   links,
   cta,
@@ -17,27 +17,45 @@ export function MobileMenu({
   cta: { label: string; href: string };
   groups: Group[];
 }) {
+  const dialog = React.useRef<HTMLDialogElement>(null);
+  const close = () => dialog.current?.close();
+
   return (
-    <Sheet>
-      <SheetTrigger
+    <>
+      <button
+        type="button"
         aria-label={uiLabels.openMenu}
-        className={buttonVariants({ variant: "outline", size: "icon", className: "size-11 md:hidden" })}
+        aria-haspopup="dialog"
+        onClick={(e) => {
+          e.currentTarget.focus(); // Safari doesn't on tap, and closing returns focus to it
+          dialog.current?.showModal();
+        }}
+        className={buttonVariants({ variant: "outline", size: "icon", className: "size-11 min-[960px]:hidden" })}
       >
         <Menu className="size-5" aria-hidden="true" />
-      </SheetTrigger>
-      <SheetContent side="right" className="w-full overflow-y-auto border-border bg-background p-0 sm:max-w-sm">
-        <SheetTitle className="sr-only">{uiLabels.menuTitle}</SheetTitle>
-        <nav aria-label="Mobile" className="flex flex-col px-6 pt-20 pb-8">
+      </button>
+      <dialog
+        ref={dialog}
+        aria-label={uiLabels.menuTitle}
+        // A click on the backdrop lands on the dialog itself.
+        onClick={(e) => e.target === e.currentTarget && close()}
+        className="menu-dialog fixed inset-y-0 right-0 left-auto m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto overscroll-contain border-l border-border bg-background p-0 text-foreground backdrop:bg-black/70 sm:max-w-sm"
+      >
+        <button
+          type="button"
+          aria-label={uiLabels.closeMenu}
+          onClick={close}
+          className={buttonVariants({ variant: "ghost", size: "icon", className: "absolute top-3 right-4 size-11" })}
+        >
+          <X className="size-5" aria-hidden="true" />
+        </button>
+        <nav aria-label="Mobile" className="flex min-h-full flex-col px-6 pt-20 pb-8">
           <ul className="flex flex-col">
             {links.map((l) => (
               <li key={l.href} className="border-b border-border">
-                <SheetClose
-                  nativeButton={false}
-                  render={<a href={l.href} />}
-                  className="flex h-14 w-full items-center text-lg font-medium text-foreground"
-                >
+                <a href={l.href} onClick={close} className="flex h-14 w-full items-center text-lg font-medium text-foreground">
                   {l.label}
-                </SheetClose>
+                </a>
                 {l.href === "/services" ? (
                   <div className="flex flex-col gap-4 pb-5">
                     {groups.map((g) => (
@@ -46,13 +64,9 @@ export function MobileMenu({
                         <ul className="mt-1">
                           {g.items.map((s) => (
                             <li key={s.href}>
-                              <SheetClose
-                                nativeButton={false}
-                                render={<a href={s.href} />}
-                                className="flex min-h-11 w-full items-center text-[15px] text-foreground"
-                              >
+                              <a href={s.href} onClick={close} className="flex min-h-11 w-full items-center text-[15px] text-foreground">
                                 {s.name}
-                              </SheetClose>
+                              </a>
                             </li>
                           ))}
                         </ul>
@@ -63,15 +77,11 @@ export function MobileMenu({
               </li>
             ))}
           </ul>
-          <SheetClose
-            nativeButton={false}
-            render={<a href={cta.href} />}
-            className={buttonVariants({ size: "cta", className: "mt-8 h-12 w-full" })}
-          >
+          <a href={cta.href} onClick={close} className={buttonVariants({ size: "cta", className: "mt-8 h-12 w-full" })}>
             {cta.label}
-          </SheetClose>
+          </a>
         </nav>
-      </SheetContent>
-    </Sheet>
+      </dialog>
+    </>
   );
 }

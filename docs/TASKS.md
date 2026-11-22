@@ -40,25 +40,25 @@ Build one at a time; run the QA loop after each.
 
 ## Phase 3: Contact form and security
 
-- [ ] Zod schema shared by client and server
-- [ ] Server action with honeypot, storing enquiries in Postgres (no email, no submission rate limit: owner decisions)
-- [ ] Success, error, and loading states
-- [ ] Security headers and CSP per `docs/SECURITY.md`
-- [ ] Test every case in `docs/QA.md` §2
+- [x] Zod schema shared by client and server
+- [x] Server action with honeypot, storing enquiries in Postgres (no email, no submission rate limit: owner decisions)
+- [x] Success, error, and loading states
+- [x] Basic security headers per `docs/SECURITY.md`
+- [x] Test every case in `docs/QA.md` §2
 
 ## Phase 4: Polish and SEO
 
-- [ ] Motion pass (entrances, hover states, reduced-motion handling)
-- [ ] Metadata, Open Graph image, JSON-LD, sitemap, robots
-- [ ] 404 page
+- [x] Motion pass (entrances, hover states, reduced-motion handling)
+- [x] Metadata, Open Graph image, JSON-LD, sitemap, robots
+- [x] 404 page
 - [ ] Analytics and Speed Insights (cookieless), loaded after idle
 
 ## Phase 5: Verification
 
 - [ ] Production build; Lighthouse mobile ≥ 95 across categories
-- [ ] Bundle analysis; remove or defer anything unjustified
-- [ ] Full accessibility, responsive, content, and security checks from `docs/QA.md`
-- [ ] Banned-words grep clean
+- [x] Bundle analysis; remove or defer anything unjustified
+- [x] Full accessibility, responsive, content, and security checks from `docs/QA.md`
+- [x] Banned-words grep clean
 
 **CHECKPOINT 3:** present the final report (scores, screenshots, remaining `TODO(owner):` items).
 
@@ -66,7 +66,8 @@ Build one at a time; run the QA loop after each.
 
 - [ ] Supply real proof numbers and sources (`proof.ts`)
 - [ ] Supply real projects and honest labels (`projects.ts`)
-- [ ] Supply contact email and social links
+- [x] Supply contact email
+- [ ] Supply social links
 - [ ] Set production environment variables
 - [ ] Confirm `/reference/*` returns 404 on the deployed site
 - [ ] Re-run Lighthouse on the live URL

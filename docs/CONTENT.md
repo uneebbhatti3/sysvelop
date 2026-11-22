@@ -4,6 +4,8 @@ Use this copy verbatim. Store it in `src/content/`. Do not add claims, numbers, 
 
 Voice: calm, precise, plain-spoken. Short active sentences, verb early. Outcomes over technology names. Banned vocabulary is listed in `CLAUDE.md`.
 
+Exception (owner decision, Nov 2026): case studies and services are written by the owner in `/admin`. What is published there is approved copy. The service copy in §4 and §9 is only the starting content.
+
 Items marked **[CONFIRM]** depend on an owner decision (see `docs/PRD.md` §10).
 
 ---
@@ -198,7 +200,7 @@ A short description of your business, what you want the system to do, and any ex
 - **Submit button:** Send message
 - **Sending state:** Sending…
 - **Success:** Thanks. Your message is in, and we'll be in touch soon.
-- **Error:** Something went wrong sending your message. Please try again, or email us at {contact email}. **[CONFIRM]**
+- **Error:** Something went wrong sending your message. Please try again, or email us at hello@sysvelop.com.
 - **Validation messages:** short and specific, for example "Enter a valid email address."
 - **Privacy line under form:** We use your details only to reply to your enquiry.
 
@@ -208,7 +210,7 @@ A short description of your business, what you want the system to do, and any ex
 
 - **Descriptor:** The digital systems behind growing businesses.
 - **Columns:** Services · Work · FAQ · Contact
-- **Contact email:** {supplied by owner} **[CONFIRM]**
+- **Contact email:** hello@sysvelop.com
 - **Copyright:** © {current year} Sysvelop. All rights reserved.
 - **Oversized background wordmark:** Sysvelop
 
@@ -225,6 +227,19 @@ One page per service at `/services/{slug}`, plus `/services` listing them all. T
 - **/services meta description:** Websites, web and mobile apps, UI/UX design, booking automation, AI assistants, integrations, SEO, and social media for small businesses.
 - **Service page title / description:** "{Service name} | Sysvelop" / the service summary.
 - **Slugs:** business-websites, web-applications, mobile-apps, ui-ux-design, booking-automation, lead-follow-up, ai-assistants, integrations, technical-seo, social-media, search-content
+
+---
+
+## 10. Client testimonial form [PROPOSED]
+
+Shown at `/testimonial/{token}`. The copy lives in `src/content/testimonials.ts`; review it there.
+
+- **Heading:** Share your experience.
+- **Intro:** Tell us what it was like to work with Sysvelop and what changed for your business.
+- **Consent (required):** Sysvelop may publish this testimonial with my name, role, and company.
+- **Success:** Thank you. Your testimonial has been received.
+- **Home page section (hidden until one is published):** eyebrow "Testimonials", heading "In our clients' words."
+- **Error page:** Something went wrong. / Try again
 
 ---
 

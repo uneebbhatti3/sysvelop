@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import { servicePageLabels, servicesIndex } from "@/content/services";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/shared/page-hero";
 import { Services } from "@/components/sections/services";
 import { Engagements } from "@/components/sections/engagements";
 import { Faq } from "@/components/sections/faq";
 import { Cta } from "@/components/sections/cta";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: servicesIndex.metaTitle,
   description: servicesIndex.metaDescription,
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

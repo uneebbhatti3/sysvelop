@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { site } from "@/content/site";
+import { seo } from "@/content/site";
+import { siteUrl } from "@/lib/seo";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -16,11 +17,12 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-// Full SEO metadata (canonical, Open Graph, JSON-LD) arrives in Phase 4.
+// Defaults only. Canonical and share tags are set per page (src/lib/seo.ts), so they can't
+// leak onto the admin, testimonial or 404 pages.
 export const metadata: Metadata = {
-  title: `${site.name} | The digital systems behind growing businesses`,
-  description:
-    "Sysvelop builds fast websites, apps, and AI automation for small businesses, with online booking and workflows that keep the business moving.",
+  metadataBase: new URL(siteUrl()),
+  title: seo.title,
+  description: seo.description,
 };
 
 export const viewport: Viewport = {

@@ -2,16 +2,19 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { services } from "@/content/site";
 import { serviceHref, servicesInGroup } from "@/content/services";
+import { readServices } from "@/lib/content";
 import { SectionHeader } from "@/components/shared/section-header";
 import { cn } from "@/lib/utils";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 
 // Oversized numbered service rows, grouped by Build / Automate / Grow. Each row links to its page.
 // On /services the page hero carries the heading, so `showHeader` is off there.
-export function Services({ showHeader = true, className }: { showHeader?: boolean; className?: string }) {
+export async function Services({ showHeader = true, className }: { showHeader?: boolean; className?: string }) {
   const GroupHeading = showHeader ? "h3" : "h2";
   const ItemHeading = showHeader ? "h4" : "h3";
-  const numbered = services.groups.map((g) => servicesInGroup(g.id));
+  const list = await readServices();
+  const groups = services.groups.filter((g) => servicesInGroup(list, g.id).length > 0);
+  const numbered = groups.map((g) => servicesInGroup(list, g.id));
   const offsets = numbered.map((_, i) => numbered.slice(0, i).reduce((sum, list) => sum + list.length, 0));
 
   return (
@@ -27,7 +30,7 @@ export function Services({ showHeader = true, className }: { showHeader?: boolea
         ) : null}
 
         <div className={cn("flex flex-col gap-16 md:gap-24", showHeader && "mt-20 md:mt-32")}>
-          {services.groups.map((g, gi) => (
+          {groups.map((g, gi) => (
             <div key={g.id} id={g.id} className="scroll-mt-24">
               <Reveal className="flex flex-col gap-2 pb-6 sm:flex-row sm:items-baseline sm:justify-between">
                 <GroupHeading className="label text-signal-text">{g.title}</GroupHeading>

@@ -8,8 +8,8 @@
 >   uppercase tracked `.label` for eyebrows and nav. Headings dim their last words (`SplitText`, visual only).
 > - Components: pill buttons (ink filled / outlined), square outlined nav button, numbered-circle tint cards,
 >   oversized numbered service rows, timeline list on the blue band, scrolling discipline ticker.
-> - Motion: slow CSS orbit in the hero and the ticker, both static under prefers-reduced-motion.
-> - Not adopted (CLAUDE.md rules): process section, team/founder card, client logos, testimonials, stat counters.
+> - Motion: an animated ASCII 3D logo "v" in the hero (`components/hero`: text only, 15 fps, on screen only, pausable, desktop and tablet only) and the ticker, both static under prefers-reduced-motion.
+> - Not adopted (CLAUDE.md rules): process section, team/founder card, client logos, stat counters. Testimonials are shown only when real and published by the owner.
 > - Pages: `/` (Hero, Why, Services, Industries, Work, Engagements, Technologies, Ticker, FAQ, Contact), `/services`, `/services/[slug]`.
 
 Goal: a futuristic, modern, restrained site that reads as established and technically excellent. The design must also be fast: the site is itself the proof of Sysvelop's speed claim.
@@ -102,7 +102,7 @@ Set as CSS variables in `globals.css` and map them to the shadcn tokens.
 - Pill eyebrow above each section heading: mono, uppercase or small caps, small dot in accent.
 - Bento grid for "Why one system": uneven card sizes on desktop, single column on mobile. Each card contains a small code-built diagram or icon cluster, never a photograph.
 - Services: three columns (Build / Automate / Grow) with thin icons (lucide), item lists.
-- FAQ: shadcn Accordion; two columns on desktop (heading left, questions right).
+- FAQ: native `<details>`; two columns on desktop (heading left, questions right).
 - Final CTA: gradient banner using the accent, with the contact form.
 - Footer: oversized faded wordmark ("Sysvelop") with a gradient fade, as in Reference 1.
 - Buttons: primary = solid accent or white; secondary = ghost with border. Visible focus rings.
@@ -114,7 +114,7 @@ Set as CSS variables in `globals.css` and map them to the shadcn tokens.
 - One ambient animation (hero booking card and node lines). Nothing else loops.
 - No parallax, no scroll-jacking, no cursor effects, no autoplay video.
 - Respect `prefers-reduced-motion` everywhere.
-- If using `motion`, prefer `LazyMotion` with `domAnimation`, and keep it out of the critical path.
+- Use the primitives in `components/motion`; no animation library on the public site.
 
 ## 9. Imagery
 

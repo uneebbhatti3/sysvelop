@@ -1,6 +1,6 @@
 # Security Requirements: Sysvelop Website
 
-These requirements are mandatory. The site is small, but it collects enquiries (personal data) and represents a company that sells software, so it is held to a high standard.
+These requirements are mandatory, and deliberately basic (owner decision, Nov 2026): Better Auth plus the essentials below. Do not add further security layers (CSP, extra rate limits, locking, hardening passes) unless the owner asks.
 
 ## 1. Principles
 
@@ -12,60 +12,37 @@ These requirements are mandatory. The site is small, but it collects enquiries (
 
 ## 2. Security headers
 
-Set in `next.config` (`headers()`) or the middleware/proxy file for the installed Next.js version, and verify with `curl -I` on the production build.
+Set in `next.config.ts`. No Content Security Policy (owner decision, Nov 2026).
 
-| Header                       | Value                                                                      |
-| ---------------------------- | -------------------------------------------------------------------------- |
-| `Strict-Transport-Security`  | `max-age=63072000; includeSubDomains; preload`                             |
-| `X-Content-Type-Options`     | `nosniff`                                                                  |
-| `X-Frame-Options`            | `DENY` (and `frame-ancestors 'none'` in CSP)                               |
-| `Referrer-Policy`            | `strict-origin-when-cross-origin`                                          |
-| `Permissions-Policy`         | `camera=(), microphone=(), geolocation=(), payment=(), interest-cohort=()` |
-| `Cross-Origin-Opener-Policy` | `same-origin`                                                              |
-| `Content-Security-Policy`    | see below                                                                  |
+| Header                      | Value                                          |
+| --------------------------- | ---------------------------------------------- |
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` |
+| `X-Content-Type-Options`    | `nosniff`                                      |
+| `X-Frame-Options`           | `DENY`                                         |
+| `Referrer-Policy`           | `strict-origin-when-cross-origin`              |
 
-**CSP starting point** (tighten, never loosen without a recorded reason):
-
-```
-default-src 'self';
-script-src 'self' 'nonce-{nonce}';
-style-src 'self' 'unsafe-inline';
-img-src 'self' data: blob:;
-font-src 'self';
-connect-src 'self';
-frame-ancestors 'none';
-base-uri 'self';
-form-action 'self';
-object-src 'none';
-upgrade-insecure-requests;
-```
-
-- Add analytics and email-provider origins only if actually required.
-- `'unsafe-eval'` is allowed in development only.
-- If the CSP breaks something, deploy it as `Content-Security-Policy-Report-Only` first to find the cause, then fix the cause. Do not remove the policy.
-- **Recorded exception (Nov 2026):** the CSP uses `script-src 'self' 'unsafe-inline'` instead of a nonce, on every route. It is set in `next.config.ts`, and every other directive matches the policy above.
-  - Why: nonces require every page to render per request. That conflicts with static/CDN delivery and the 95+ mobile Lighthouse budget.
-  - Why `/admin` too: Next.js documents Partial Prerendering (`cacheComponents`) as incompatible with nonce CSP, because the prerendered shell's scripts can't carry the nonce. A nonce policy on `/admin` was tried and blocked every script on the page.
-  - Mitigation: React escapes all rendered enquiry data, and no `dangerouslySetInnerHTML` is used.
-  - To reach a strict nonce CSP, `cacheComponents` would have to be turned off.
-
-## 3. Contact form
+## 3. Forms and admin
 
 - Validate with zod on the server: type, length (name ≤ 100, email ≤ 254, company ≤ 120, message ≤ 4000), allowed select values.
 - Honeypot field (hidden from users and assistive technology, `tabindex=-1`, `autocomplete=off`). A filled honeypot gets a fake success response.
-- Contact form is rate-limited (reinstated Nov 2026, owner approved): 5 submissions per 10 minutes per hashed IP, and 200 per hour site-wide. The honeypot alone can't stop scripts that call the server action directly. Generic error on limit. If spam still appears, add a CAPTCHA (see `docs/TRD.md` §6).
+- Contact form: 5 submissions per 10 minutes per visitor.
+- Parameterised SQL only.
 - **Admin auth uses Better Auth** (self-hosted, `src/lib/auth.ts`, config in `src/lib/auth-config.ts`).
   - **Accounts:** one admin, email + password (12+ characters). Sign-up is disabled, and the account is created with `npm run admin:create`.
   - **No two-factor:** removed by owner decision (Nov 2026). The password and the rate limit are the only barrier, so use a long, unique password.
   - **Sessions:** stored in Postgres with a fixed 8-hour lifetime. Signing out deletes the session.
   - **No public endpoint:** no `/api/auth` HTTP handler is mounted. All auth calls go through origin-checked server actions.
-- Admin sign-in is rate-limited per hashed IP (5 attempts per 15 minutes), plus a site-wide backstop of 50 per 15 minutes. Generic error on limit.
-- Rate-limit IPs come from `x-vercel-forwarded-for`, or the right-most `x-forwarded-for` entry. The left-most entry is client-supplied and never trusted.
-- Build the email as plain text. Strip CR/LF from any value placed in a header (subject, reply-to) to prevent header injection.
-- Use the visitor's email only as `Reply-To`, never as the `From` address.
+- Admin sign-in: 5 attempts per 15 minutes per visitor.
 - Never reflect submitted values into HTML without escaping. React escapes by default; never use `dangerouslySetInnerHTML` with user data.
 - No personal data in logs, error messages, URLs, or analytics events.
 - Server actions / route handlers must check the request method and origin (same-site) where applicable.
+
+### Dashboard-managed content
+
+- Every action in `src/app/admin/content-actions.ts` and every admin page calls `requireAdmin()`. The dashboard layout is not an auth boundary.
+- The server re-validates everything with `src/lib/content-schema.ts`. Table names come from a fixed map. Project links are http(s) only.
+- Screenshots are re-encoded in the browser (drops EXIF), then checked on the server by content: JPEG only, 700 KB and 1600 px at most. They are served from `/work-image/[id]` as `image/jpeg` with `nosniff`.
+- Draft images need an admin session. A published image can stay in caches for a few hours after it is unpublished (route: 1 hour, image optimiser: 4 hours).
 
 ## 4. Secrets and configuration
 
@@ -105,11 +82,9 @@ upgrade-insecure-requests;
 
 ## 9. Pre-launch security checklist
 
-- [ ] All headers present on the production build (`curl -I`)
-- [ ] CSP active with no violations in the console
-- [ ] Contact form: valid, invalid, and honeypot cases tested
-- [ ] Admin login: wrong password, rate limit, and forged session cookie tested
-- [ ] Header-injection attempt (newline in name/email) rejected or neutralised
+- [ ] The four headers are present
+- [ ] Contact form works
+- [ ] Admin login works, and admin pages redirect when signed out
 - [ ] No secrets in the repository history (secret scan clean)
 - [ ] `npm audit`: no high or critical issues
 - [ ] `/reference/*` returns 404 on the deployed site

@@ -8,8 +8,8 @@ export const site = {
     "Websites, apps, and AI automation for small businesses: fast to load, simple to book, and engineered to run without constant attention.",
   oneLiner:
     "Sysvelop designs and builds websites, apps, and AI automation that help growing businesses look established, run efficiently, and get found.",
-  // TODO(owner): public contact email (PRD Open Decision #6). Footer hides it while empty.
-  contactEmail: "",
+  // Supplied by the owner (PRD Open Decision #6). Hidden wherever it is used if left empty.
+  contactEmail: "hello@sysvelop.com",
 } as const;
 
 export type NavLink = { label: string; href: string; requiresWork?: boolean };
@@ -34,6 +34,8 @@ export const uiLabels = {
   menuTitle: "Menu",
   closeMenu: "Close menu",
   homeLink: "Sysvelop home",
+  pauseAnimation: "Pause animation",
+  playAnimation: "Play animation",
 };
 
 export const hero = {
@@ -212,6 +214,21 @@ export const contactForm = {
   },
   privacyLine: "We use your details only to reply to your enquiry.",
 } as const;
+
+// Verbatim from docs/CONTENT.md, SEO and metadata.
+export const seo = {
+  title: "Sysvelop | The digital systems behind growing businesses",
+  description:
+    "Sysvelop builds fast websites, apps, and AI automation for small businesses, with online booking and workflows that keep the business moving.",
+  ogTitle: "Sysvelop: The digital systems behind growing businesses",
+  ogDescription:
+    "Websites, apps, and AI automation for small businesses: fast to load, simple to book, and engineered to run without constant attention.",
+} as const;
+
+export const notFoundPage = { heading: "This page isn't here.", link: "Back to home" } as const;
+
+// TODO(owner): PROPOSED copy for the error page (docs/CONTENT.md §10), awaiting approval.
+export const errorPage = { heading: "Something went wrong.", retry: "Try again" } as const;
 
 export const footer = {
   descriptor: "The digital systems behind growing businesses.",

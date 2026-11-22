@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type Resolver } from "react-hook-form";
 import { contactForm, site } from "@/content/site";
-import { contactSchema, type ContactData, type ContactInput } from "@/lib/schema";
+import type { ContactData, ContactInput } from "@/lib/schema";
 import { submitContact } from "@/app/actions/contact";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+
+// zod is about 30 KB gzipped, so it loads when someone starts on the form, not with the page.
+const loadResolver = () => import("./contact-resolver").then((m) => m.contactResolver);
+const resolver: Resolver<ContactInput, unknown, ContactData> = async (...args) => (await loadResolver())(...args);
 
 const field =
   "w-full rounded-[3px] border border-input bg-transparent px-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground hover:border-foreground/40 focus-visible:border-ring aria-invalid:border-[#ff8a8a]";
@@ -22,7 +25,7 @@ export function ContactForm() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ContactInput, unknown, ContactData>({
-    resolver: zodResolver(contactSchema),
+    resolver,
     mode: "onTouched",
     defaultValues: { name: "", email: "", company: "", need: "Not sure yet", message: "" },
   });
@@ -42,7 +45,7 @@ export function ContactForm() {
       } catch {
         setStatus("error");
       }
-    })(e);
+    })(e).catch(() => setStatus("error")); // the validation chunk failed to load
   };
 
   if (status === "success") {
@@ -54,7 +57,7 @@ export function ContactForm() {
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-col gap-4">
+    <form noValidate onSubmit={onSubmit} onFocus={() => void loadResolver().catch(() => {})} className="flex flex-col gap-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <Field id="cf-name" label={f.name} error={errors.name?.message}>
           <input id="cf-name" {...register("name")} {...a11y("cf-name", errors.name)} maxLength={100} autoComplete="name" className={`${field} h-12`} />

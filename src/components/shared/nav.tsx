@@ -2,22 +2,27 @@ import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { nav, services } from "@/content/site";
 import { serviceHref, servicePageLabels, servicesInGroup } from "@/content/services";
-import { hasWork } from "@/content/projects";
+import { getHasWork } from "@/content/projects";
+import { readServices } from "@/lib/content";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 
 const linkClass =
   "label inline-flex h-11 items-center gap-1 rounded-md px-3 text-foreground transition-colors hover:text-signal-text";
 
-export function Nav() {
+export async function Nav() {
+  const [hasWork, list] = await Promise.all([getHasWork(), readServices()]);
   const links = nav.links.filter((l) => !l.requiresWork || hasWork);
-  const groups = services.groups.map((g) => ({ ...g, items: servicesInGroup(g.id) }));
+  const groups = services.groups
+    .map((g) => ({ ...g, items: servicesInGroup(list, g.id) }))
+    .filter((g) => g.items.length > 0);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container-x relative flex h-18 items-center justify-between gap-4">
         <Logo />
-        <nav aria-label="Primary" className="hidden md:block">
+        {/* Logo, up to six links and the button need 960px. Below that, the menu (same breakpoint). */}
+        <nav aria-label="Primary" className="hidden min-[960px]:block">
           <ul className="flex items-center gap-1">
             {links.map((l) =>
               l.href === "/services" ? (
@@ -31,7 +36,7 @@ export function Nav() {
                     />
                   </Link>
                   <div className="invisible absolute inset-x-6 top-full pt-px opacity-0 transition-opacity duration-150 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 md:inset-x-10 xl:inset-x-16">
-                    <div className="grid grid-cols-3 gap-8 rounded-b-[3px] border border-t-0 border-border bg-popover p-8 shadow-[0_24px_48px_-24px_rgb(27_27_27/0.25)]">
+                    <div className="grid max-h-[calc(100svh-5rem)] grid-cols-3 gap-8 overflow-y-auto rounded-b-[3px] border border-t-0 border-border bg-popover p-8 shadow-[0_24px_48px_-24px_rgb(27_27_27/0.25)]">
                       {groups.map((g) => (
                         <div key={g.id}>
                           <p className="label border-b border-border pb-3 text-signal-text">

@@ -1,18 +1,11 @@
 "use server";
 
 import { after } from "next/server";
-import { headers } from "next/headers";
 import { contactSchema, type ContactInput } from "@/lib/schema";
 import { db, purgeExpiredThrottled } from "@/lib/db";
-import { hashKey } from "@/lib/crypto";
-import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { rateLimit } from "@/lib/rate-limit";
 
 export type ContactResult = { ok: true } | { ok: false };
-
-// Submission limits (docs/SECURITY.md §3). The honeypot only stops bots that fill in the HTML
-// form; a script can call this action directly, so these limits are the real flood control.
-const PER_IP = { limit: 5, windowSeconds: 10 * 60 }; // 5 per 10 minutes per visitor
-const GLOBAL = { limit: 200, windowSeconds: 60 * 60 }; // 200 per hour across the site
 
 // docs/TRD.md §6. Next.js server actions only accept POST and reject cross-origin requests
 // (Origin must match Host), which covers the same-site check in docs/SECURITY.md §3.
@@ -27,18 +20,8 @@ export async function submitContact(input: ContactInput): Promise<ContactResult>
   const data = parsed.data;
 
   try {
-    // 3. Rate limit, per hashed IP and site-wide. Generic failure on limit.
-    const ip = clientIp(await headers());
-    const perIp = await rateLimit(hashKey("contact", ip), PER_IP.limit, PER_IP.windowSeconds);
-    if (!perIp.ok) {
-      console.error("contact: rate_limited");
-      return { ok: false };
-    }
-    const global = await rateLimit(hashKey("contact", "*global*"), GLOBAL.limit, GLOBAL.windowSeconds);
-    if (!global.ok) {
-      console.error("contact: global_rate_limited");
-      return { ok: false };
-    }
+    // 3. Spam limit: 5 per 10 minutes per visitor.
+    if (!(await rateLimit("contact", 5, 600))) return { ok: false };
 
     // 4. Store. Enquiries are read in the admin dashboard; there is no email notification.
     await db()`

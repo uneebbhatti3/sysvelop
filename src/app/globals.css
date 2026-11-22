@@ -230,17 +230,40 @@
   }
 }
 
-/* Ambient motion: hero orbit and the discipline ticker. Static under reduced motion. */
+/* Hero ASCII (components/hero): stacked text layers on one square grid. These fonts all have a
+   0.6em advance, so 80 columns by 48 rows is square and 1em is 1/48 of the width. */
+.ascii-art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  user-select: none;
+  pointer-events: none;
+}
+.ascii-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  contain: strict;
+  font-family: Menlo, "DejaVu Sans Mono", "Courier New", monospace;
+  font-size: calc(100cqw / 48);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-ligatures: none;
+  white-space: pre;
+}
+/* Exactly one line each, even where a fallback glyph is taller. */
+.ascii-layer > div {
+  height: 1em;
+}
+@media (scripting: none) {
+  .ascii-toggle {
+    display: none;
+  }
+}
+
+/* Ambient motion: the discipline ticker. Static under reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
-  .orbit-spin {
-    animation: orbit-spin 60s linear infinite;
-  }
-  .orbit-spin-rev {
-    animation: orbit-spin 90s linear infinite reverse;
-  }
-  .orbit-counter {
-    animation: orbit-spin 60s linear infinite reverse;
-  }
   .ticker-track {
     animation: ticker 40s linear infinite;
   }
@@ -253,15 +276,61 @@
     animation-delay: var(--d, 0ms);
   }
 }
+/* Mobile menu. */
+html:has(.menu-dialog[open]) {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .menu-dialog[open] {
+    animation: menu-in 200ms ease-out;
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateX(2.5rem);
+  }
+}
+
+/* Scroll reveals: start states, played by components/motion/reveal-observer.tsx. */
+@media (scripting: enabled) {
+  [data-reveal] {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal="fadeUp"] {
+      transform: translateY(12px);
+    }
+    [data-reveal="scaleIn"] {
+      transform: scale(0.94);
+    }
+    [data-reveal="pop"] {
+      transform: translateY(8px) scale(0.96);
+    }
+    [data-reveal="rise"] {
+      transform: translateY(40px);
+    }
+    [data-reveal="drawY"] {
+      transform: scaleY(0);
+    }
+  }
+}
+/* Card hover raise. `translate` composes with the reveal's `transform`. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  [data-lift] {
+    transition:
+      translate 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 300ms;
+  }
+  [data-lift]:hover {
+    translate: 0 -6px;
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
     transform: translateY(12px);
-  }
-}
-@keyframes orbit-spin {
-  to {
-    transform: rotate(360deg);
   }
 }
 @keyframes ticker {

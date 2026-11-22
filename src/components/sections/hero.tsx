@@ -1,14 +1,14 @@
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { hero } from "@/content/site";
-import { hasWork } from "@/content/projects";
+import { getHasWork } from "@/content/projects";
 import { SplitText } from "@/components/shared/split-heading";
-import { Stagger, StaggerItem } from "@/components/motion/reveal";
+import { HeroAscii } from "@/components/hero/hero-ascii";
 
 const delay = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
 
-export function Hero() {
-  const secondary = hasWork ? hero.secondary : hero.secondaryAlt;
+export async function Hero() {
+  const secondary = (await getHasWork()) ? hero.secondary : hero.secondaryAlt;
 
   return (
     <section aria-labelledby="hero-heading" className="relative overflow-hidden">
@@ -42,7 +42,7 @@ export function Hero() {
           </div>
 
           <div className="hidden md:block lg:col-span-5">
-            <Orbit />
+            <HeroAscii />
           </div>
         </div>
 
@@ -55,47 +55,5 @@ export function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-// Code-built orbit: two rings, travelling dots, a blue core, and three static labels.
-// Decorative only; rotation is disabled under prefers-reduced-motion.
-function Orbit() {
-  const [a, b, c] = hero.orbitLabels;
-  return (
-    <Stagger onLoad delay={0.15} stagger={0.12} aria-hidden className="relative mx-auto aspect-square w-full max-w-[520px]">
-      <StaggerItem variant="scaleIn" className="absolute inset-0">
-        {/* outer ring with travelling dots */}
-        <div className="orbit-spin absolute inset-0 rounded-full border border-signal/25">
-          <span className="absolute top-[14%] left-[14%] size-3 -translate-1/2 rounded-full bg-signal shadow-[0_0_0_6px_rgb(0_60_255/0.12)]" />
-          <span className="absolute right-[6%] bottom-[24%] size-2.5 translate-1/2 rounded-full bg-foreground shadow-[0_0_0_6px_rgb(27_27_27/0.08)]" />
-        </div>
-        {/* inner ring */}
-        <div className="orbit-spin-rev absolute inset-[15%] rounded-full border border-foreground/15">
-          <span className="absolute top-1/2 -left-1 size-2 rounded-full bg-signal/60" />
-        </div>
-        {/* core */}
-        <div className="absolute inset-[30%] rounded-full bg-[radial-gradient(circle_at_34%_30%,#8aa2ff_0%,#003cff_48%,#00135c_100%)] shadow-[0_30px_80px_-20px_rgb(0_60_255/0.55)]">
-          <div className="absolute inset-[18%] rounded-full border border-white/20" />
-          <div className="absolute inset-[38%] rounded-full border border-white/25" />
-        </div>
-      </StaggerItem>
-      {/* labels */}
-      <Pill className="top-[12%] right-[-2%]">{a}</Pill>
-      <Pill className="top-[46%] left-[-6%]">{b}</Pill>
-      <Pill className="right-[14%] bottom-[6%]">{c}</Pill>
-    </Stagger>
-  );
-}
-
-function Pill({ className, children }: { className: string; children: React.ReactNode }) {
-  return (
-    <StaggerItem
-      as="span"
-      variant="pop"
-      className={`label absolute rounded-full border border-border bg-background px-3.5 py-2 text-[11px] text-foreground shadow-[0_8px_24px_-12px_rgb(27_27_27/0.25)] ${className}`}
-    >
-      {children}
-    </StaggerItem>
   );
 }

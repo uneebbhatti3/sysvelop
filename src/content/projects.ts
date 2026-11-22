@@ -1,8 +1,10 @@
-// Real projects only, honestly labelled. The Work section (and links to it)
-// are hidden while this list is empty.
+// Real projects only, honestly labelled. The owner adds them in the dashboard
+// (/admin/case-studies), and this file is the only way the site reads them, results included.
+// The Work section (and links to it) are hidden while none are published.
+import { readProjects } from "@/lib/content";
 
 export type Project = {
-  slug: string;
+  id: string;
   name: string;
   kind: "Client project" | "Studio project";
   summary: string;
@@ -12,7 +14,9 @@ export type Project = {
   image?: { src: string; width: number; height: number; alt: string };
 };
 
-// TODO(owner): supply projects and their labels (PRD Open Decision #5).
-export const projects: Project[] = [];
+// TODO(owner): add projects in /admin/case-studies (PRD Open Decision #5).
+export const getProjects = readProjects;
 
-export const hasWork = projects.length > 0;
+export async function getHasWork() {
+  return (await getProjects()).length > 0;
+}

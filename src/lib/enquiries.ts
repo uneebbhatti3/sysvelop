@@ -70,3 +70,9 @@ export async function getDashboardData(): Promise<DashboardData> {
     stats: { ...counts, topNeed: top ?? null },
   };
 }
+
+/** For the sidebar badge, which is on every dashboard page. */
+export async function countOpenEnquiries() {
+  const [row] = await db()<{ open: number }[]>`select count(*)::int as open from enquiries where status = 'new'`;
+  return row.open;
+}

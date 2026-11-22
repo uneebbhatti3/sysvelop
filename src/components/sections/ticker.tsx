@@ -1,6 +1,6 @@
 import { ticker } from "@/content/site";
 
-// Scrolling discipline strip. The list is rendered twice for a seamless loop; the copy is
+// Scrolling discipline strip. The list is rendered twice so the loop has no gap; the copy is
 // hidden from assistive tech, which gets the plain list once. Static under reduced motion.
 export function Ticker() {
   const row = (hidden: boolean) => (

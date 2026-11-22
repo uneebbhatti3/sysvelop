@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { footer, nav, services, site } from "@/content/site";
 import { serviceHref, servicesInGroup } from "@/content/services";
-import { hasWork } from "@/content/projects";
+import { getHasWork } from "@/content/projects";
+import { readServices } from "@/lib/content";
 import { Logo } from "@/components/shared/logo";
 import { Reveal } from "@/components/motion/reveal";
 
@@ -23,7 +24,11 @@ function Column({ title, children, className }: { title: string; children: React
   );
 }
 
-export function Footer() {
+export async function Footer() {
+  const [hasWork, list] = await Promise.all([getHasWork(), readServices()]);
+  const groups = services.groups
+    .map((g) => ({ ...g, items: servicesInGroup(list, g.id) }))
+    .filter((g) => g.items.length > 0);
   const links = nav.links.filter((l) => !l.requiresWork || hasWork);
 
   return (
@@ -32,7 +37,7 @@ export function Footer() {
         <div className="border-t border-border pt-16 md:pt-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="flex flex-col gap-3 sm:col-span-2 lg:col-span-3">
-            <Logo href="/" />
+            <Logo href="/" tone="light" />
             <p className="max-w-[30ch] text-base text-muted-foreground">{footer.descriptor}</p>
             {site.contactEmail ? (
               <a href={`mailto:${site.contactEmail}`} className="text-base text-foreground hover:text-signal-text">
@@ -41,9 +46,9 @@ export function Footer() {
             ) : null}
           </div>
 
-          {services.groups.map((g) => (
+          {groups.map((g) => (
             <Column key={g.id} title={g.title} className="lg:col-span-2">
-              {servicesInGroup(g.id).map((s) => (
+              {g.items.map((s) => (
                 <li key={s.slug}>
                   <Link href={serviceHref(s.slug)} className={linkClass}>
                     {s.name}

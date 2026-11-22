@@ -1,4 +1,7 @@
 // Service pages (/services/[slug]).
+// `serviceList` is the starting content: npm run db:migrate copies it into Postgres once, and
+// services are edited in /admin/services from then on. It is only shown while the database
+// hasn't been migrated. Keep this file free of imports: the migration script runs it in Node.
 // `name` and the group lines are approved copy. Everything else in this file is
 // TODO(owner): PROPOSED copy (docs/CONTENT.md §9), awaiting approval.
 
@@ -262,10 +265,6 @@ export const serviceList: Service[] = [
 
 export const serviceHref = (slug: string) => `/services/${slug}`;
 
-export function getService(slug: string) {
-  return serviceList.find((s) => s.slug === slug);
-}
-
-export function servicesInGroup(group: ServiceGroupId) {
-  return serviceList.filter((s) => s.group === group);
+export function servicesInGroup(list: Service[], group: ServiceGroupId) {
+  return list.filter((s) => s.group === group);
 }

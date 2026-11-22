@@ -2,32 +2,42 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Check } from "lucide-react";
-import { services } from "@/content/site";
-import { getService, serviceHref, serviceList, servicePageLabels } from "@/content/services";
+import { notFoundPage, services } from "@/content/site";
+import { serviceHref, servicePageLabels } from "@/content/services";
+import { readServices } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";
 import { Engagements } from "@/components/sections/engagements";
 import { Cta } from "@/components/sections/cta";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 
-export function generateStaticParams() {
-  return serviceList.map((s) => ({ slug: s.slug }));
+// Fully static. A service added after a build is generated in full on its first visit; without
+// this, regenerating the route's fallback shell fails when a dashboard save expires the cache.
+export const ensureStatic = "navigation";
+
+export async function generateStaticParams() {
+  const list = await readServices();
+  // cacheComponents fails the build on an empty list; this slug simply resolves to a 404.
+  return list.length ? list.map((s) => ({ slug: s.slug })) : [{ slug: "_none" }];
 }
 
 export async function generateMetadata({ params }: PageProps<"/services/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
-  if (!service) return {};
-  return { title: `${service.name} | Sysvelop`, description: service.summary };
+  const service = (await readServices()).find((s) => s.slug === slug);
+  if (!service) return { title: `${notFoundPage.heading} | Sysvelop` };
+  return pageMetadata({ title: `${service.name} | Sysvelop`, description: service.summary, path: serviceHref(slug) });
 }
 
 export default async function ServicePage({ params }: PageProps<"/services/[slug]">) {
   const { slug } = await params;
-  const service = getService(slug);
+  const list = await readServices();
+  const service = list.find((s) => s.slug === slug);
   if (!service) notFound();
 
   const group = services.groups.find((g) => g.id === service.group)!;
-  const related = service.related.map(getService).filter((s) => s !== undefined);
+  // Deleted and unpublished services drop out of the related list.
+  const related = service.related.map((r) => list.find((s) => s.slug === r)).filter((s) => s !== undefined);
 
   return (
     <>
@@ -91,6 +101,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </div>
       </section>
 
+      {related.length ? (
       <section aria-labelledby="related-heading" className="py-24 md:py-40">
         <div className="container-x">
           <div className="flex flex-wrap items-end justify-between gap-6">
@@ -121,6 +132,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </Stagger>
         </div>
       </section>
+      ) : null}
 
       <Engagements />
       <Cta />
