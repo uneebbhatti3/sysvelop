@@ -10,7 +10,7 @@
 | UI primitives    | shadcn/ui (via the shadcn MCP)                               |
 | Extra components | 21st.dev (via its MCP), reviewed before adding               |
 | Icons            | lucide-react                                                 |
-| Fonts            | `next/font` with Geist Sans and Geist Mono                   |
+| Fonts            | `next/font` with Space Grotesk (display) and DM Sans (body)  |
 | Forms            | react-hook-form + zod (`@hookform/resolvers`)                |
 | Animation        | CSS and one small observer (`components/motion`); no animation library on the public site |
 | Enquiry storage  | Neon Postgres via `postgres` (see PRD Open Decision #2)      |
@@ -28,30 +28,37 @@ Use current stable versions. Verify setup instructions against the official docu
 ```
 src/
   app/
-    layout.tsx            root layout, fonts, metadata, JSON-LD
-    page.tsx              home (composes sections)
-    not-found.tsx
-    sitemap.ts
-    robots.ts
-    opengraph-image.tsx
-    actions/contact.ts    server action (or api/contact/route.ts)
+    layout.tsx            root layout, fonts, default metadata
+    (site)/               public pages: home, /services, /services/[slug], site 404
+    admin/                login, and (dashboard)/ for enquiries, case studies, services, testimonials
+    testimonial/[token]/  client testimonial form (share link)
+    work-image/[id]/      case study screenshots from Postgres
+    actions/              contact.ts, testimonial.ts (server actions)
+    error.tsx, not-found.tsx, sitemap.ts, robots.ts, opengraph-image.tsx
   components/
     ui/                   shadcn components
-    sections/             Hero, ProofStrip, WhySystem, Services, Work, Faq, Cta, Footer
-    shared/               Nav, Eyebrow, Logo, BookingCard, NodeLines, etc.
+    sections/             home page sections and footer
+    shared/               Nav, Logo, mobile menu, contact and testimonial forms, JSON-LD
+    hero/                 ASCII hero renderer and player
+    motion/               reveal primitives and observer
+    admin/                dashboard sidebar, lists and forms
   content/
-    site.ts               name, tagline, descriptor, nav, footer
+    site.ts               name, tagline, descriptor, nav, footer, labels
     proof.ts              verified metrics (empty values = not rendered)
-    projects.ts           project data (empty = section hidden)
-    faq.ts
+    projects.ts           reads published case studies
+    services.ts           seed and fallback for services
+    testimonials.ts, faq.ts
   lib/
-    schema.ts             zod schemas (shared client and server)
-    ratelimit.ts
-    email.ts
-    utils.ts
+    db.ts                 Postgres client
+    auth.ts, auth-config.ts   Better Auth and requireAdmin()
+    content.ts, testimonials.ts, enquiries.ts   cached and admin reads
+    content-cache.ts      cache expiry after writes
+    schema.ts, content-schema.ts, testimonial-schema.ts   zod validation
+    rate-limit.ts, seo.ts, jpeg.ts, utils.ts
 public/
   brand/                  logo files
   reference/              design reference images (NEVER deployed, see §8)
+db/schema.sql             tables; applied by npm run db:migrate
 docs/                     these documents
 ```
 

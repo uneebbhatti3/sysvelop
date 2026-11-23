@@ -33,7 +33,7 @@ export const viewport: Viewport = {
 // Shared shell only. Public chrome lives in (site)/layout.tsx; the admin has its own.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

@@ -7,7 +7,7 @@ export function JsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Organization", name: site.name, url, logo: `${url}/brand/logo.png`, description: site.oneLiner },
+      { "@type": "Organization", name: site.name, url, logo: `${url}/brand/logo.png`, description: site.oneLiner, sameAs: site.socials.map((s) => s.href) },
       { "@type": "WebSite", name: site.name, url },
     ],
   };

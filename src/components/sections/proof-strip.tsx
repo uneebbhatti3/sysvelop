@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { verifiedProof } from "@/content/proof";
 import { Stagger, StaggerItem } from "@/components/motion/reveal";
 
@@ -12,9 +13,9 @@ export function ProofStrip() {
           <StaggerItem key={m.label} className="flex flex-col items-center gap-2 text-center">
             <dt className="order-2 text-[12px] tracking-[0.06em] text-muted-foreground uppercase">
               {m.source ? (
-                <a href={m.source} className="underline-offset-4 hover:underline" rel="noopener noreferrer" target="_blank">
+                <Link href={m.source} className="underline-offset-4 hover:underline" rel="noopener noreferrer" target="_blank">
                   {m.label}
-                </a>
+                </Link>
               ) : (
                 m.label
               )}

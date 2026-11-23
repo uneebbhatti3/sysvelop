@@ -43,9 +43,9 @@ Build the marketing website for Sysvelop. The site must convince a small-busines
 - No Privacy or Terms pages (owner decision, Nov 2026)
 - Testimonials: collected in `/admin/testimonials` or through a client link, shown on the home page after Work once the owner publishes them (owner decision, Nov 2026)
 - 404 page, sitemap, robots, Open Graph image, structured data
-- Dark theme only
+- Light editorial theme only
 
-**Out of scope (launch):** blog, pricing page or public pricing, client logo wall, team or About-the-people page, live chat, user accounts, general CMS (only case studies and services are editable, in `/admin`: owner decision, Nov 2026), multi-language, light theme.
+**Out of scope (launch):** blog, pricing page or public pricing, client logo wall, team or About-the-people page, live chat, user accounts, general CMS (only case studies, services and testimonials are editable, in `/admin`: owner decision, Nov 2026), multi-language, dark theme.
 
 **Phase 2 candidates:** individual case-study pages at `/work/[slug]`, booking-calendar embed, blog.
 
@@ -56,14 +56,14 @@ Copy for every section is in `docs/CONTENT.md`. Visual direction is in `docs/DES
 ### Home (`/`), sections in order
 
 1. **Navigation:** wordmark/logo, links (Services, Work, FAQ, Contact), primary button "Start a project". Sticky, minimal, collapses to a mobile menu. Must be keyboard accessible.
-2. **Hero:** eyebrow, headline (the tagline), descriptor, two buttons ("Start a project" primary, "See our work" secondary), and a code-built booking-flow visual (see DESIGN.md). The LCP element must be text, not an image.
+2. **Hero:** eyebrow, headline (the tagline), descriptor, two buttons ("Start a project" primary, "See our work" secondary), and an animated ASCII visual, hidden below 768px (see DESIGN.md). The LCP element must be text, not an image.
 3. **Proof strip:** two metrics from `src/content/proof.ts` (mobile load time; bookings handled automatically). Each metric renders only if its value is non-empty. If both are empty, the whole strip does not render.
 4. **Why one system:** short statement plus four cards (speed, booking, automation, findability) in a bento layout.
 5. **Services:** Build / Automate / Grow, each with a short line and a list of items.
 6. **Work:** project cards added in `/admin/case-studies` and read through `src/content/projects.ts`. Each project is honestly labelled (client project or studio project) and leads with a result, not a technology list. The section hides while none are published.
 7. **FAQ:** accordion, five questions.
 8. **Final call to action:** banner with the contact form (or a button that scrolls to it).
-9. **Footer:** logo, short descriptor, nav links, contact email, legal links, copyright, oversized faded wordmark.
+9. **Footer:** logo, short descriptor, nav links, contact email, copyright, oversized faded wordmark.
 
 ### Other routes
 - No `/privacy` or `/terms` pages (owner decision, Nov 2026).
@@ -74,7 +74,7 @@ Copy for every section is in `docs/CONTENT.md`. Visual direction is in `docs/DES
 **Contact form**
 - Fields: name (required), email (required), company (optional), what you need (select: Website, App, AI automation, SEO or social media, Not sure), message (required), hidden honeypot.
 - Client and server validation with the same schema. Clear inline errors. Success and failure states. No page reload.
-- Submissions are stored in Postgres (Neon) and reviewed in the password-protected admin dashboard at `/admin`. No email notification and no submission rate limit (owner decisions, Nov 2026). Spam-protected by a honeypot per `docs/SECURITY.md`.
+- Submissions are stored in Postgres (Neon) and reviewed in the password-protected admin dashboard at `/admin`. No email notification (owner decision, Nov 2026). Submissions are limited to 5 per 10 minutes per visitor. Spam-protected by a honeypot per `docs/SECURITY.md`.
 
 **Proof and projects data**
 - `proof.ts` entries carry `label`, `value`, and `source` (for example a PageSpeed report URL and date). A metric without a value does not render.

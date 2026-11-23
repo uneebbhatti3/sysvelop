@@ -70,7 +70,7 @@ Set in `next.config.ts`. No Content Security Policy (owner decision, Nov 2026).
 
 - No Privacy Policy page (owner decision, Nov 2026). The form states only that details are used to reply to the enquiry.
 - No cookie banner is needed if no non-essential cookies or trackers are used. If that changes, add consent handling before launch.
-- Do not collect more than the form requires. Do not store submissions in a database unless the owner decides to (default: email only).
+- Do not collect more than the form requires. Submissions are stored in Postgres and read in `/admin` (owner decision, Nov 2026). No email copy is sent.
 
 ## 8. Working safely with Claude Code and the browser tools
 

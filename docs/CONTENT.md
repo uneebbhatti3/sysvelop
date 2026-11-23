@@ -155,7 +155,7 @@ Items marked * were suggested additions; owner to confirm.
 
 ## 5. Work
 
-Renders only when `src/content/projects.ts` has entries. **[CONFIRM]**
+Renders only when at least one case study is published in `/admin/case-studies` (read through `src/content/projects.ts`).
 
 - **Eyebrow:** Work
 - **Heading:** Systems in use, with the numbers behind them.

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { work } from "@/content/site";
@@ -54,10 +55,10 @@ export async function Work() {
                   ))}
                 </ul>
                 {p.url ? (
-                  <a href={p.url} rel="noopener noreferrer" target="_blank" className="inline-flex items-center gap-1 text-sm text-signal-text hover:underline">
+                  <Link href={p.url} rel="noopener noreferrer" target="_blank" className="inline-flex items-center gap-1 text-sm text-signal-text hover:underline">
                     {p.name}
                     <ArrowUpRight className="size-4" aria-hidden="true" />
-                  </a>
+                  </Link>
                 ) : null}
               </div>
             </StaggerItem>

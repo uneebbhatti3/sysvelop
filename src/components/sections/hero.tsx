@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { hero } from "@/content/site";
@@ -25,23 +26,23 @@ export async function Hero() {
               <SplitText text={hero.headline} tail={2} />
             </h1>
 
-            <p style={delay(120)} className="rise mt-9 max-w-[34rem] text-[17px] leading-[1.65] text-pretty text-muted-foreground md:text-[19px]">
+            <p style={delay(120)} className="rise mt-9 max-w-136 text-[17px] leading-[1.65] text-pretty text-muted-foreground md:text-[19px]">
               {hero.subheading}
             </p>
 
             <div style={delay(220)} className="rise mt-10 flex flex-col gap-3 min-[440px]:flex-row">
-              <a href={hero.primary.href} className={buttonVariants({ size: "pill" })}>
+              <Link href={hero.primary.href} className={buttonVariants({ size: "pill" })}>
                 {hero.primary.label}
                 <ArrowUpRight className="size-4 text-[#9db1ff] nudge" aria-hidden="true" />
-              </a>
-              <a href={secondary.href} className={buttonVariants({ variant: "outline", size: "pill" })}>
+              </Link>
+              <Link href={secondary.href} className={buttonVariants({ variant: "outline", size: "pill" })}>
                 {secondary.label}
                 <ArrowDown className="size-4 text-signal-text nudge-down" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
 
-          <div className="hidden md:block lg:col-span-5">
+          <div className="block lg:col-span-5">
             <HeroAscii />
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { saveCaseStudy } from "@/app/admin/content-actions";
 import {
   LIMITS,
@@ -147,9 +148,15 @@ export function CaseStudyForm({ item }: { item?: CaseStudyRow }) {
 
       <Panel title="Screenshot" hint="Optional. A real screenshot of the project. It is resized for the web automatically." error={errors.image}>
         {preview ? (
-          // A local blob or a private draft image, neither of which next/image can optimise.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={preview} alt="Screenshot preview" className="max-h-72 max-w-full self-start rounded-md border object-contain" />
+          // A local blob or a private draft image, so it is shown unoptimized.
+          <Image
+            src={preview}
+            alt="Screenshot preview"
+            width={1600}
+            height={1000}
+            unoptimized
+            className="h-auto max-h-72 w-auto max-w-full self-start rounded-md border object-contain"
+          />
         ) : null}
         <Field label={preview ? "Replace screenshot" : "Upload screenshot"} error={imageError}>
           {(props) => (

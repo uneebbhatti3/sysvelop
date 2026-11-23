@@ -55,3 +55,6 @@ next-env.d.ts
 /.playwright-mcp/
 /qa/screenshots/
 /qa/*.mjs
+
+# Git Bash crash logs
+*.stackdump

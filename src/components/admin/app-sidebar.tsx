@@ -107,7 +107,7 @@ export function AppSidebar({
                   <SidebarMenuButton
                     tooltip="View site"
                     render={
-                      <a href="/" target="_blank" rel="noopener noreferrer" />
+                      <Link href="/" target="_blank" rel="noopener noreferrer" />
                     }
                   >
                     <ExternalLinkIcon />

@@ -10,6 +10,8 @@ export const site = {
     "Sysvelop designs and builds websites, apps, and AI automation that help growing businesses look established, run efficiently, and get found.",
   // Supplied by the owner (PRD Open Decision #6). Hidden wherever it is used if left empty.
   contactEmail: "hello@sysvelop.com",
+  // Supplied by the owner. Each renders as an icon link in the footer and as sameAs in JSON-LD.
+  socials: [{ name: "Instagram", href: "https://www.instagram.com/sysvelop/" }],
 } as const;
 
 export type NavLink = { label: string; href: string; requiresWork?: boolean };

@@ -52,10 +52,10 @@ export function PageHero({
           </h1>
           <div style={{ "--d": "200ms" } as React.CSSProperties} className="rise flex flex-col items-start gap-8 lg:col-span-4">
             <p className="text-[17px] leading-[1.65] text-pretty text-muted-foreground md:text-lg">{intro}</p>
-            <a href={nav.cta.href} className={buttonVariants({ size: "pill" })}>
+            <Link href={nav.cta.href} className={buttonVariants({ size: "pill" })}>
               {nav.cta.label}
               <ArrowUpRight className="nudge size-4 text-[#9db1ff]" aria-hidden="true" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

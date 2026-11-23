@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import * as React from "react";
 import { Menu, X } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button-variants";
@@ -53,9 +54,9 @@ export function MobileMenu({
           <ul className="flex flex-col">
             {links.map((l) => (
               <li key={l.href} className="border-b border-border">
-                <a href={l.href} onClick={close} className="flex h-14 w-full items-center text-lg font-medium text-foreground">
+                <Link href={l.href} onClick={close} className="flex h-14 w-full items-center text-lg font-medium text-foreground">
                   {l.label}
-                </a>
+                </Link>
                 {l.href === "/services" ? (
                   <div className="flex flex-col gap-4 pb-5">
                     {groups.map((g) => (
@@ -64,9 +65,9 @@ export function MobileMenu({
                         <ul className="mt-1">
                           {g.items.map((s) => (
                             <li key={s.href}>
-                              <a href={s.href} onClick={close} className="flex min-h-11 w-full items-center text-[15px] text-foreground">
+                              <Link href={s.href} onClick={close} className="flex min-h-11 w-full items-center text-[15px] text-foreground">
                                 {s.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -77,9 +78,9 @@ export function MobileMenu({
               </li>
             ))}
           </ul>
-          <a href={cta.href} onClick={close} className={buttonVariants({ size: "cta", className: "mt-8 h-12 w-full" })}>
+          <Link href={cta.href} onClick={close} className={buttonVariants({ size: "cta", className: "mt-8 h-12 w-full" })}>
             {cta.label}
-          </a>
+          </Link>
         </nav>
       </dialog>
     </>

@@ -123,7 +123,7 @@ export function ContentList({
                       <PencilIcon />
                     </Link>
                     {item.published ? (
-                      <a
+                      <Link
                         href={item.liveHref}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -131,7 +131,7 @@ export function ContentList({
                         className={buttonVariants({ variant: "ghost", size: "icon", className: iconButton })}
                       >
                         <ExternalLinkIcon />
-                      </a>
+                      </Link>
                     ) : null}
                     <Button
                       variant="ghost"

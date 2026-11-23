@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 // Adapted from the shadcn dashboard-01 block (data-table): same table, pagination, drawer and
 // menu patterns, rebuilt around real enquiries. Drag-to-reorder was removed (it has no meaning
 // for an inbox). Every value is rendered as text; React escapes it.
@@ -165,9 +166,9 @@ export function EnquiriesTable({ enquiries, total }: { enquiries: Enquiry[]; tot
         col.accessor("email", {
           header: "Email",
           cell: ({ row }) => (
-            <a href={replyHref(row.original)} className="block max-w-56 truncate text-muted-foreground hover:text-foreground hover:underline">
+            <Link href={replyHref(row.original)} className="block max-w-56 truncate text-muted-foreground hover:text-foreground hover:underline">
               {row.original.email}
-            </a>
+            </Link>
           ),
           enableSorting: false,
         }),
@@ -218,7 +219,7 @@ export function EnquiriesTable({ enquiries, total }: { enquiries: Enquiry[]; tot
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-44">
                 <DropdownMenuItem onClick={() => setViewingId(row.original.id)}>View message</DropdownMenuItem>
-                <DropdownMenuItem render={<a href={replyHref(row.original)} />}>Reply by email</DropdownMenuItem>
+                <DropdownMenuItem render={<Link href={replyHref(row.original)} />}>Reply by email</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {enquiryStatuses
                   .filter((s) => s !== row.original.status)
@@ -502,9 +503,9 @@ function EnquiryViewer({
               <dl className="grid grid-cols-[6rem_1fr] gap-x-4 gap-y-3">
                 <dt className="text-muted-foreground">Email</dt>
                 <dd className="break-all">
-                  <a href={replyHref(e)} className="underline underline-offset-4">
+                  <Link href={replyHref(e)} className="underline underline-offset-4">
                     {e.email}
-                  </a>
+                  </Link>
                 </dd>
                 <dt className="text-muted-foreground">Company</dt>
                 <dd>{e.company || "—"}</dd>
@@ -523,7 +524,7 @@ function EnquiryViewer({
               </div>
             </div>
             <DrawerFooter>
-              <Button render={<a href={replyHref(e)} />}>
+              <Button render={<Link href={replyHref(e)} />}>
                 <MailIcon />
                 Reply by email
               </Button>

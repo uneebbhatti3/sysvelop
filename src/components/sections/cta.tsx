@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { contactForm, cta, site } from "@/content/site";
 import { ContactForm } from "@/components/shared/contact-form";
 import { SplitText } from "@/components/shared/split-heading";
@@ -25,9 +26,9 @@ export function Cta() {
           <Reveal className="flex flex-col gap-5 lg:col-span-4">
             <p className="max-w-[34ch] text-lg leading-relaxed text-muted-foreground">{cta.text}</p>
             {site.contactEmail ? (
-              <a href={`mailto:${site.contactEmail}`} className="text-lg font-medium text-foreground underline underline-offset-4">
+              <Link href={`mailto:${site.contactEmail}`} className="text-lg font-medium text-foreground underline underline-offset-4">
                 {site.contactEmail}
-              </a>
+              </Link>
             ) : null}
           </Reveal>
           <Reveal delay={0.12} className="lg:col-span-7 lg:col-start-6">

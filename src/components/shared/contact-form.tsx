@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { contactForm, site } from "@/content/site";
@@ -106,9 +107,9 @@ export function ContactForm() {
               <>
                 {", "}
                 {contactForm.errorEmailPrefix}{" "}
-                <a href={`mailto:${site.contactEmail}`} className="underline underline-offset-4">
+                <Link href={`mailto:${site.contactEmail}`} className="underline underline-offset-4">
                   {site.contactEmail}
-                </a>
+                </Link>
               </>
             ) : null}
             .

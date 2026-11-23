@@ -41,10 +41,10 @@ Build one at a time; run the QA loop after each.
 ## Phase 3: Contact form and security
 
 - [x] Zod schema shared by client and server
-- [x] Server action with honeypot, storing enquiries in Postgres (no email, no submission rate limit: owner decisions)
+- [x] Server action with honeypot, storing enquiries in Postgres (no email: owner decision; limited to 5 per 10 minutes per visitor)
 - [x] Success, error, and loading states
 - [x] Basic security headers per `docs/SECURITY.md`
-- [x] Test every case in `docs/QA.md` §2
+- [ ] Test every case in `docs/QA.md` §2 (done except contact-form newline injection)
 
 ## Phase 4: Polish and SEO
 
@@ -57,7 +57,7 @@ Build one at a time; run the QA loop after each.
 
 - [ ] Production build; Lighthouse mobile ≥ 95 across categories
 - [x] Bundle analysis; remove or defer anything unjustified
-- [x] Full accessibility, responsive, content, and security checks from `docs/QA.md`
+- [ ] Full accessibility, responsive, content, and security checks from `docs/QA.md` (still to run: 200% zoom, `/reference/*` 404 on the deployed site)
 - [x] Banned-words grep clean
 
 **CHECKPOINT 3:** present the final report (scores, screenshots, remaining `TODO(owner):` items).

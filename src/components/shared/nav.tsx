@@ -76,9 +76,9 @@ export async function Nav() {
           </ul>
         </nav>
         <div className="flex items-center gap-2">
-          <a href={nav.cta.href} className="label hidden h-11 items-center border border-foreground px-4 text-foreground transition-colors hover:bg-foreground hover:text-background min-[400px]:inline-flex">
+          <Link href={nav.cta.href} className="label hidden h-11 items-center border border-foreground px-4 text-foreground transition-colors hover:bg-foreground hover:text-background min-[400px]:inline-flex">
             {nav.cta.label}
-          </a>
+          </Link>
           <MobileMenu links={links} cta={nav.cta} groups={groups.map((g) => ({ id: g.id, title: g.title, items: g.items.map((s) => ({ name: s.name, href: serviceHref(s.slug) })) }))} />
         </div>
       </div>

@@ -18,7 +18,7 @@ Report what you verified, with the screenshot paths. Do not claim success withou
 
 - Nav: anchor links scroll to the right section; sticky header does not cover headings; mobile menu opens, closes, traps focus, and closes on Escape.
 - FAQ accordion: opens and closes by mouse and keyboard.
-- Hero booking card: animation plays; with `prefers-reduced-motion` emulated, the static confirmed state shows.
+- Hero ASCII visual: animates on screen, the pause control stops it, it is static with `prefers-reduced-motion` emulated, and it is hidden below 768 px.
 - Contact form:
   - valid submission shows success
   - empty and invalid inputs show clear inline errors
@@ -69,7 +69,7 @@ npm run build && npm run start
 
 - No horizontal scroll from 320 px to 1920 px.
 - Tap targets at least 44 × 44 px on mobile.
-- Hero text stays readable and the booking card fits without overflow at 320 px.
+- Hero text stays readable without overflow at 320 px.
 
 ## 8. Definition of done
 

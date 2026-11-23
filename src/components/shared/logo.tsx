@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { uiLabels } from "@/content/site";
 import logoDark from "../../../public/brand/logo.png";
 import logoLight from "../../../public/brand/logo-light.png";
+import Link from "next/link";
 
 type Tone = "dark" | "light";
 
@@ -12,7 +13,7 @@ export function LogoImage({ tone = "dark", className }: { tone?: Tone; className
   return (
     <Image
       src={tone === "light" ? logoLight : logoDark}
-      alt=""
+      alt="Sysvelop"
       unoptimized
       loading={tone === "light" ? "lazy" : "eager"}
       className={cn("h-6 w-auto shrink-0", className)}
@@ -22,8 +23,8 @@ export function LogoImage({ tone = "dark", className }: { tone?: Tone; className
 
 export function Logo({ className, href = "/", tone }: { className?: string; href?: string; tone?: Tone }) {
   return (
-    <a href={href} aria-label={uiLabels.homeLink} className={cn("inline-flex h-11 w-fit shrink-0 items-center rounded-md", className)}>
+    <Link href={href} aria-label={uiLabels.homeLink} className={cn("inline-flex h-11 w-fit shrink-0 items-center rounded-md", className)}>
       <LogoImage tone={tone} />
-    </a>
+    </Link>
   );
 }

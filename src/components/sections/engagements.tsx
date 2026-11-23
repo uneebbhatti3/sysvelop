@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { engagements } from "@/content/site";
 import { buttonVariants } from "@/components/ui/button-variants";
@@ -25,10 +26,10 @@ export function Engagements() {
           ))}
         </Stagger>
         <Reveal className="mt-12">
-          <a href={engagements.cta.href} className={buttonVariants({ size: "pill" })}>
+          <Link href={engagements.cta.href} className={buttonVariants({ size: "pill" })}>
             {engagements.cta.label}
             <ArrowUpRight className="nudge size-4 text-[#9db1ff]" aria-hidden="true" />
-          </a>
+          </Link>
         </Reveal>
       </div>
     </section>

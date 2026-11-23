@@ -50,6 +50,8 @@ The references are inspiration only. Do not copy layouts, copy text, or reuse th
 - _Take:_ the monospace typographic voice for labels, the glowing bordered product-UI card as the hero visual, vertical light-streak background (CSS gradients, not images).
 - _Leave:_ chatbot framing, logo row.
 
+> **§3 to §8 below describe the original dark concept and are kept for history.** The built site follows the direction-change note at the top; `src/app/globals.css` is the source of truth for tokens and fonts.
+
 ## 3. Design concept: "quiet futurism"
 
 Dark-first, confident, minimal. The futuristic feel comes from precision (thin borders, monospace labels, soft glows, diagram lines), not from effects. One luminous accent colour, used sparingly. Premium is conveyed by restraint, spacing, and craft, never by stock imagery or the word itself.
